@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lab Status</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 320px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .status {
+      font-size: 20px;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>🧪 Lab Status</h2>
+    <p id="students">Loading...</p>
+    <div id="status" class="status"></div>
+  </div>
+
+  <script>
+    fetch("http://localhost:5000/lab-status")
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("students").innerText =
+          "Required Students: " + data.requiredStudents;
+
+        document.getElementById("status").innerText =
+          data.status;
+      })
+      .catch(err => {
+        document.getElementById("status").innerText =
+          "❌ Cannot fetch lab status";
+      });
+  </script>
+
+</body>
+</html>

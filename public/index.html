@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lab Equipment Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div class="container fluid">
+  <div class="row">
+    <div class=" col-lg-3 col-xs-2 col-12">
+      
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="logo">
+      <i class="fa-solid fa-flask"></i>
+      <span>Lab Equipment Management System</span>
+    </div>
+
+    <nav>
+      <a class="active">Home</a>
+      <button class="login-btn">Login</button>
+    </nav>
+  </header>
+  </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Welcome to Lab Equipment Management System</h1>
+      <p>Check and manage lab equipment availability by department.</p>
+      <img src = "hero.jpeg">
+    </div>
+  </section>
+
+  <!-- DEPARTMENTS -->
+  <section class="departments">
+    <h2>Select Your Department</h2>
+
+    <div class="card-grid">
+      <div class="card">
+        <img src= "cse.jpeg" alt="CSE Lab">
+        <h3>CSE Lab</h3>
+        <p>Computer Science & Engineering</p>
+        <button data-page = "computer.html">View Equipment</button>
+      </div>
+
+      <div class="card">
+        <img src="civil.jpeg" alt="Civil Lab">
+        <h3>Civil Lab</h3>
+        <p>Civil Engineering</p>
+       <button data-page = "civil.html">View Equipment</button>
+      </div>
+
+      <div class="card">
+        <img src="mech.jpeg" alt="Mechanical Lab">
+        <h3>Mechanical Lab</h3>
+        <p>Mechanical Engineering</p>
+       <button data-page = "mechanical.html">View Equipment</button>
+      </div>
+
+      <div class="card">
+        <img src="eee.jpeg" alt="EEE Lab">
+        <h3>EEE Lab</h3>
+        <p>Electrical & Electronics Engineering</p>
+       <button data-page = "electrical.html">View Equipment</button>
+      </div>
+
+      <div class="card">
+        <img src="ece.jpeg" alt="ECE Lab">
+        <h3>ECE Lab</h3>
+        <p>Electronics & Communication Engineering</p>
+       <button data-page = "electronics.html">View Equipment</button>
+      </div>
+
+      <div class="card">
+        <img src="chemical.jpeg" alt="Chemical Lab">
+        <h3>Chemical Lab</h3>
+        <p>Chemical Engineering</p>
+        <button data-page = "chemical.html">View Equipment</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+  <script src="index.js"></script>
+
+</body>
+</html>

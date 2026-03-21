@@ -1,0 +1,273 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.topbar {
+  height: 60px;
+  background: linear-gradient(135deg, #0f4c81, #1e6bb8);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+}
+
+.topbar nav a {
+  margin-right: 20px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+}
+
+.topbar nav a.active {
+  text-decoration: underline;
+}
+
+.topbar nav .home-link {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 5px 12px;
+  border-radius: 6px;
+}
+
+.logout-btn {
+  background: #2f80ed;
+  border: none;
+  padding: 6px 14px;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.layout {
+  display: flex;
+  min-height: calc(100vh - 60px);
+}
+
+.sidebar {
+  width: 230px;
+  background: #1e4f91;
+  color: white;
+  padding: 20px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 12px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+  background: #2f80ed;
+  border-radius: 6px;
+}
+
+.content {
+  flex: 1;
+  padding: 30px;
+  background: #f5f7fb;
+}
+
+.content h1 {
+  margin-bottom: 12px;
+}
+
+#admin-message {
+  margin-bottom: 10px;
+  color: #2f4b69;
+}
+
+.session-meta {
+  margin-bottom: 20px;
+  color: #3a4a5a;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.stat-card i {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.stat-card.green { border-left: 6px solid #22c55e; }
+.stat-card.orange { border-left: 6px solid #f97316; }
+.stat-card.yellow { border-left: 6px solid #facc15; }
+
+.table-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.table-actions {
+  display: flex;
+  gap: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+}
+
+thead {
+  background: #eef3fb;
+}
+
+tbody tr {
+  border-bottom: 1px solid #eee;
+}
+
+.row-selected {
+  background: #eef3fb;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+.available { background: #d1fae5; color: #065f46; }
+.inuse { background: #fde68a; color: #92400e; }
+
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  background: #2f80ed;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 6px;
+}
+
+.action-btn.secondary {
+  background: #667085;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.manage-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.number-stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.number-stepper input {
+  flex: 1;
+}
+
+.step-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #cbd5e1;
+  background: #f1f5f9;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.step-btn:hover {
+  background: #e2e8f0;
+}
+
+.manage-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  color: #344054;
+  gap: 6px;
+}
+
+.manage-form input,
+.manage-form select {
+  padding: 8px;
+  border: 1px solid #d0d5dd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.manage-actions {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+#manage-message,
+#logs-title {
+  margin-top: 10px;
+  color: #344054;
+}
+
+.utility-panel p {
+  margin: 8px 0;
+}
+
+.utility-panel .panel-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.utility-panel .panel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.utility-card {
+  border: 1px solid #e4e7ec;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f8fafc;
+}
+
+@media (max-width: 1100px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .manage-form {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+}

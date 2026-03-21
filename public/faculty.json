@@ -1,0 +1,44 @@
+[
+  {
+    "facultyId": "CHEM01",
+    "name": "Dr. Anil Verma",
+    "department": "Chemical",
+    "email": "anilverma@bvrit.ac.in",
+    "password": "Anil@12345"
+  },
+  {
+    "facultyId": "CIV01",
+    "name": "Dr. Suresh Rao",
+    "department": "Civil",
+    "email": "sureshrao@bvrit.ac.in",
+    "password": "Suresh@123"
+  },
+  {
+    "facultyId": "CSD01",
+    "name": "Dr. Ramesh Kumar",
+    "department": "CSD",
+    "email": "rameshkumar@bvrit.ac.in",
+    "password": "Ramesh@12345"
+  },
+  {
+    "facultyId": "CSE01",
+    "name": "Dr. Priya Sharma",
+    "department": "CSE",
+    "email": "priyasharma@bvrit.ac.in",
+    "password": "Priya@123"
+  },
+  {
+    "facultyId": "AIDS01",
+    "name": "Dr. Neha Gupta",
+    "department": "AIDS",
+    "email": "nehagupta@bvrit.ac.in",
+    "password": "Neha@123"
+  },
+  {
+    "facultyId": "MECH01",
+    "name": "Dr. Vikram Singh",
+    "department": "Mechanical",
+    "email": "vikramsingh@bvrit.ac.in",
+    "password": "Vikram@123"
+  }
+]

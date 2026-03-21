@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Signup</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body>
+
+  <div class="container">
+    <h2>Faculty Registration</h2>
+    <p class="subtitle">Lab Equipment Management System</p>
+
+    <form id="signupForm" onsubmit="return false" novalidate>
+
+      <div class="input-group">
+        <input type="text" id="facultyId" required>
+        <label>Faculty ID</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="name" required>
+        <label>Faculty Name</label>
+      </div>
+
+      <div class="input-group">
+        <input type="text" id="department" required>
+        <label>Department</label>
+      </div>
+
+      <div class="input-group">
+        <input type="email" id="email" required>
+        <label>Email</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="password" required>
+        <label>Password</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="confirmPassword" required>
+        <label>Confirm Password</label>
+      </div>
+
+      <button id="signup-submit" type="button">Register</button>
+
+      <p class="switch">
+        Already registered? <a href="login.html">Login</a>
+      </p>
+
+    </form>
+  </div>
+
+  <script src="api-base.js"></script>
+  <script>
+    (function () {
+      const API_BASE = window.API_BASE || window.location.origin;
+      const submitBtn = document.getElementById("signup-submit");
+      const form = document.getElementById("signupForm");
+
+      async function handleSignup() {
+        const facultyId = document.getElementById("facultyId").value.trim();
+        const name = document.getElementById("name").value.trim();
+        const department = document.getElementById("department").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        if (!facultyId || !name || !department || !email || !password || !confirmPassword) {
+          alert("All fields are required");
+          return;
+        }
+        if (password !== confirmPassword) {
+          alert("Passwords do not match");
+          return;
+        }
+
+        try {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "Registering...";
+
+          const registerResponse = await fetch(`${API_BASE}/api/auth/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name,
+              faculty_id: facultyId,
+              department,
+              email,
+              password
+            })
+          });
+          const registerPayload = await registerResponse.json();
+          if (!registerResponse.ok || !registerPayload.success) {
+            throw new Error(registerPayload?.error?.message || "Registration failed");
+          }
+
+          const loginResponse = await fetch(`${API_BASE}/api/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+          });
+          const loginPayload = await loginResponse.json();
+          if (!loginResponse.ok || !loginPayload.success || !loginPayload.data?.token) {
+            throw new Error(loginPayload?.error?.message || "Login after registration failed");
+          }
+
+          const token = loginPayload.data.token;
+          const userResponse = await fetch(`${API_BASE}/api/auth/me`, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const userPayload = await userResponse.json();
+          if (!userResponse.ok || !userPayload.success) {
+            throw new Error(userPayload?.error?.message || "Unable to load user");
+          }
+
+          const userId = userPayload.data.user.id;
+          await fetch(`${API_BASE}/api/labs/assign`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ user_id: userId, lab_name: department })
+          });
+
+          localStorage.setItem("auth_token", token);
+          localStorage.setItem("user_email", email);
+          localStorage.setItem("managed_lab", department);
+          window.location.replace("/admin.html");
+        } catch (err) {
+          alert(err.message || "Unable to register");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Register";
+        }
+      }
+
+      submitBtn.addEventListener("click", handleSignup);
+      form.addEventListener("keydown", e => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          handleSignup();
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

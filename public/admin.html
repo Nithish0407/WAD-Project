@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | BVRIT LabTrack</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <i class="fa-solid fa-flask"></i>
+      <span>BVRIT LabTrack</span>
+    </div>
+
+    <nav>
+      <a href="index.html" class="home-link">Home</a>
+      <span class="welcome">Welcome, <span id="admin-name">Faculty</span></span>
+      <button class="logout-btn" id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="side-link active" data-view="dashboard" href="#"><i class="fa-solid fa-house"></i> Dashboard</a>
+      <a class="side-link" data-view="equipment-manage" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Manage Equipment</a>
+      <a class="side-link" data-view="equipment-logs" href="#"><i class="fa-solid fa-clock-rotate-left"></i> Equipment Logs</a>
+      <a class="side-link" data-view="users" href="#"><i class="fa-solid fa-users"></i> Manage Users</a>
+    </aside>
+
+    <main class="content">
+      <h1>Dashboard</h1>
+      <p id="admin-message"></p>
+      <p class="session-meta">
+        Faculty ID: <strong id="admin-faculty-id">-</strong> |
+        Email: <strong id="admin-email">-</strong> |
+        Department: <strong id="admin-department">-</strong> |
+        Labs: <strong id="admin-labs">-</strong>
+      </p>
+
+      <div class="table-box utility-panel" id="utility-panel">
+        <h2 id="utility-title">Dashboard</h2>
+        <div id="utility-content"></div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-card">
+          <i class="fa-solid fa-wrench"></i>
+          <p>Total Equipment</p>
+          <h2 id="total-equipments">0</h2>
+        </div>
+
+        <div class="stat-card green">
+          <i class="fa-solid fa-check"></i>
+          <p>Available</p>
+          <h2 id="available-equipments">0</h2>
+        </div>
+
+        <div class="stat-card orange">
+          <i class="fa-solid fa-plug"></i>
+          <p>Not Available</p>
+          <h2 id="not-available-equipments">0</h2>
+        </div>
+
+        <div class="stat-card yellow">
+          <i class="fa-solid fa-building"></i>
+          <p>Total Labs</p>
+          <h2 id="labs-count">0</h2>
+        </div>
+      </div>
+
+      <div class="table-box">
+        <h2>Lab Equipment Usage Across Departments</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Equipment ID</th>
+              <th>Lab</th>
+              <th>Equipment Name</th>
+              <th>Category</th>
+              <th>Quantity</th>
+              <th>Available</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="adminTable"></tbody>
+        </table>
+      </div>
+
+      <div class="table-box" id="logs-panel" style="display:none;">
+        <h2>Equipment Logs</h2>
+        <p id="logs-title"></p>
+        <table>
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>Action</th>
+              <th>Status</th>
+              <th>Faculty</th>
+              <th>Details</th>
+            </tr>
+          </thead>
+          <tbody id="logs-table-body"></tbody>
+        </table>
+        <div class="manage-actions">
+          <button class="action-btn secondary" id="logs-close-btn" type="button">Close Logs</button>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="api-base.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>

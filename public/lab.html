@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lab Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">
+      <i class="fa-solid fa-flask"></i>
+      <span id="lab-header-title">Lab Equipment Checker</span>
+    </div>
+
+    <nav>
+      <span style="flex:1"></span>
+      <button id="back-btn" class="login-btn" type="button" style="margin-right:10px;">Back</button>
+      <button id="logout-btn" class="login-btn" type="button">Logout</button>
+    </nav>
+  </header>
+
+  <section class="results">
+    <h2 id="lab-results-title">Lab Equipment</h2>
+    <p id="lab-results-status">Loading...</p>
+
+    <div class="equipment-form-wrap" style="display: none;">
+      <h3 id="form-title">Add Equipment</h3>
+      <form id="equipment-form" class="equipment-form">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="equipment-id-input">Equipment ID</label>
+            <input id="equipment-id-input" type="text" placeholder="CSE-001">
+          </div>
+          <div class="form-field">
+            <label for="equipment-name-input">Equipment Name</label>
+            <input id="equipment-name-input" type="text" placeholder="Oscilloscope" required>
+          </div>
+          <div class="form-field">
+            <label for="equipment-count-input">Equipment Count</label>
+            <input id="equipment-count-input" type="number" min="0" value="1" required>
+          </div>
+          <div class="form-field">
+            <label for="lab-status-input">Lab Status</label>
+            <select id="lab-status-input" required>
+              <option value="available">available</option>
+              <option value="not_available">not_available</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button id="save-equipment-btn" class="login-btn" type="submit">Save</button>
+          <button id="cancel-edit-btn" class="login-btn" type="button">Cancel Edit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <p>Total Equipment Entries</p>
+        <h3 id="stat-total-equipment">0</h3>
+      </div>
+      <div class="stat-card">
+        <p>Total Equipment Count</p>
+        <h3 id="stat-total-units">0</h3>
+      </div>
+      <div class="stat-card">
+        <p>Available Units</p>
+        <h3 id="stat-available-units">0</h3>
+      </div>
+      <div class="stat-card">
+        <p>Not Available Units</p>
+        <h3 id="stat-unavailable-units">0</h3>
+      </div>
+    </div>
+
+    <div class="results-table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th>Equipment ID</th>
+            <th>Lab</th>
+            <th>Equipment Name</th>
+            <th>Available Units</th>
+            <th>Working Condition</th>
+          </tr>
+        </thead>
+        <tbody id="lab-results-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <script src="api-base.js"></script>
+  <script src="lab.js"></script>
+</body>
+</html>

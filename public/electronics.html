@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Electronics Lab </h1>
+    <div id = "EqCnt" > <b> EQUIPMENTS </b>
+    <hr>
+    <div id = "boxA"> <button data-page = "halfwavefullwave.html"> Half Wave And Full Wave Apparatus </button></div>
+    <hr>
+    <div id = "boxB"> <button data-page = "logicgates.html"> Basic Logic Gates </button></div>
+    <hr>
+    <div id = "boxC"> <button data-page = "PNJunction.html"> PN Junction Characteristics </button></div>
+    <hr>
+    <div id = "boxE"> <button data-page = "poswersupply.html"> Power Suppliers </button></div>
+    <hr>
+    </div>
+
+    <script>
+        document.querySelectorAll("#EqCnt button").forEach(button => {
+            button.addEventListener("click", () => {
+                window.location.href = button.dataset.page;
+            });
+        });
+    </script>
+
+    <link rel = "stylesheet" href = "electronics.css">
+</body>
+</html>

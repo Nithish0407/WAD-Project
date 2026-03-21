@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Computer Lab</title>
+</head>
+<body>
+
+<h2>Computer Lab Equipment</h2>
+<button onclick="loadData()">Check Availability</button>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Equipment</th>
+      <th>Total</th>
+      <th>Available</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+
+<script>
+function loadData() {
+  fetch("http://localhost:5000/lab-equipment/Computer Lab")
+    .then(res => res.json())
+    .then(data => {
+      const table = document.getElementById("tableBody");
+      table.innerHTML = "";
+
+      data.forEach(item => {
+        table.innerHTML += `
+          <tr>
+            <td>${item.equipment_name}</td>
+            <td>${item.total}</td>
+            <td>${item.available}</td>
+          </tr>
+        `;
+      });
+    });
+}
+</script>
+
+</body>
+</html>

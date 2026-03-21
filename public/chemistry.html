@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> <b> Chemistry Lab </b> </h1>
+    <div id = "EquCont" > <b> EQUIPMENTS </b>
+    <hr>
+    <div id = "boxB"> <button data-page = beakers.html> Beakers </button></div>
+    <hr>
+    <div id = "boxC"> <button data-page = flasks.html> Flasks </button></div>
+    <hr>
+    <div id = "boxD"> <button data-page = testtubes.html> Test Tubes </button></div>
+    <hr>
+    <div id = "boxE"> <button data-page = thermometer.html> Thermometers </button></div>
+    <hr>
+    </div>
+
+    <script>
+        document.querySelectorAll("#EquCont button").forEach(button => {
+            button.addEventListener("click", () => {
+                window.location.href = button.dataset.page;
+            });
+        });
+    </script>
+
+    <link rel = "stylesheet" href = "chemistry.css">
+</body> 
+</html>

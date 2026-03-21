@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage User | BVRIT LabTrack</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <i class="fa-solid fa-flask"></i>
+      <span>BVRIT LabTrack</span>
+    </div>
+    <nav>
+      <a href="admin.html" class="home-link">Back To Dashboard</a>
+      <button class="logout-btn" id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="content">
+    <h1>Manage User</h1>
+    <p id="user-page-message"></p>
+
+    <div class="table-box utility-panel">
+      <h2>User Overview</h2>
+      <div class="panel-grid">
+        <div class="utility-card">
+          <p><strong>Name:</strong> <span id="mu-name">-</span></p>
+          <p><strong>Faculty ID:</strong> <span id="mu-faculty">-</span></p>
+          <p><strong>Email:</strong> <span id="mu-email">-</span></p>
+          <p><strong>Department:</strong> <span id="mu-dept">-</span></p>
+        </div>
+        <div class="utility-card">
+          <p><strong>Total Logins:</strong> <span id="mu-logins">0</span></p>
+          <p><strong>Equipment Actions:</strong> <span id="mu-eq-actions">0</span></p>
+          <p><strong>Latest Login:</strong> <span id="mu-latest">-</span></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="api-base.js"></script>
+  <script src="manage-user.js"></script>
+</body>
+</html>

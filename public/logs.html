@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Equipment Logs | BVRIT LabTrack</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <i class="fa-solid fa-flask"></i>
+      <span>BVRIT LabTrack</span>
+    </div>
+    <nav>
+      <a href="admin.html" class="home-link">Back To Dashboard</a>
+      <button class="logout-btn" id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="content">
+    <h1>Equipment Logs</h1>
+    <p id="logs-message"></p>
+
+    <div class="table-box">
+      <p class="session-meta" id="logs-meta">Loading equipment...</p>
+      <table>
+        <thead>
+          <tr>
+            <th>When</th>
+            <th>Action</th>
+            <th>Status</th>
+            <th>Faculty</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody id="logs-table-body">
+          <tr><td colspan="5">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script src="api-base.js"></script>
+  <script src="logs.js"></script>
+</body>
+</html>

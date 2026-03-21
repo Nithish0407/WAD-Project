@@ -1,0 +1,54 @@
+{
+  "CSE": [
+    { "equipment_id": "CL-CPU-001", "equipment_name_custom": "Desktop CPU", "equipment_count": 40, "lab_status": "available" },
+    { "equipment_id": "CL-MON-001", "equipment_name_custom": "LED Monitor", "equipment_count": 40, "lab_status": "available" },
+    { "equipment_id": "CL-KBD-001", "equipment_name_custom": "Keyboard", "equipment_count": 45, "lab_status": "available" },
+    { "equipment_id": "CL-MSE-001", "equipment_name_custom": "Optical Mouse", "equipment_count": 45, "lab_status": "available" },
+    { "equipment_id": "CL-UPS-001", "equipment_name_custom": "UPS Unit", "equipment_count": 12, "lab_status": "available" },
+    { "equipment_id": "CL-SWT-001", "equipment_name_custom": "Network Switch", "equipment_count": 4, "lab_status": "available" },
+    { "equipment_id": "CL-RTR-001", "equipment_name_custom": "Router", "equipment_count": 2, "lab_status": "available" },
+    { "equipment_id": "CL-PJT-001", "equipment_name_custom": "Projector", "equipment_count": 1, "lab_status": "available" },
+    { "equipment_id": "CL-PRN-001", "equipment_name_custom": "Laser Printer", "equipment_count": 2, "lab_status": "not_available" },
+    { "equipment_id": "CL-LAN-001", "equipment_name_custom": "LAN Cable Pack", "equipment_count": 60, "lab_status": "available" }
+  ],
+  "Civil": [
+    { "equipment_id": "CV-THE-001", "equipment_name_custom": "Theodolite", "equipment_count": 8, "lab_status": "available" },
+    { "equipment_id": "CV-LEV-001", "equipment_name_custom": "Auto Level", "equipment_count": 6, "lab_status": "available" },
+    { "equipment_id": "CV-STA-001", "equipment_name_custom": "Total Station", "equipment_count": 3, "lab_status": "available" },
+    { "equipment_id": "CV-SIV-001", "equipment_name_custom": "Sieve Set", "equipment_count": 12, "lab_status": "available" },
+    { "equipment_id": "CV-UCT-001", "equipment_name_custom": "Compression Testing Machine", "equipment_count": 2, "lab_status": "not_available" },
+    { "equipment_id": "CV-CST-001", "equipment_name_custom": "Cement Strength Tester", "equipment_count": 2, "lab_status": "available" }
+  ],
+  "Mechanical": [
+    { "equipment_id": "ME-LAT-001", "equipment_name_custom": "Lathe Machine", "equipment_count": 6, "lab_status": "available" },
+    { "equipment_id": "ME-MIL-001", "equipment_name_custom": "Milling Machine", "equipment_count": 4, "lab_status": "available" },
+    { "equipment_id": "ME-DRL-001", "equipment_name_custom": "Drilling Machine", "equipment_count": 5, "lab_status": "available" },
+    { "equipment_id": "ME-WLD-001", "equipment_name_custom": "Welding Unit", "equipment_count": 5, "lab_status": "not_available" },
+    { "equipment_id": "ME-CMP-001", "equipment_name_custom": "Air Compressor", "equipment_count": 2, "lab_status": "available" },
+    { "equipment_id": "ME-TOR-001", "equipment_name_custom": "Torque Wrench Set", "equipment_count": 10, "lab_status": "available" }
+  ],
+  "EEE": [
+    { "equipment_id": "EE-MTR-001", "equipment_name_custom": "DC Motor Trainer", "equipment_count": 8, "lab_status": "available" },
+    { "equipment_id": "EE-XFM-001", "equipment_name_custom": "Transformer Trainer", "equipment_count": 6, "lab_status": "available" },
+    { "equipment_id": "EE-VAR-001", "equipment_name_custom": "Variac", "equipment_count": 7, "lab_status": "available" },
+    { "equipment_id": "EE-WAT-001", "equipment_name_custom": "Digital Wattmeter", "equipment_count": 8, "lab_status": "available" },
+    { "equipment_id": "EE-PSU-001", "equipment_name_custom": "Regulated Power Supply", "equipment_count": 10, "lab_status": "available" },
+    { "equipment_id": "EE-INS-001", "equipment_name_custom": "Insulation Tester", "equipment_count": 4, "lab_status": "not_available" }
+  ],
+  "ECE": [
+    { "equipment_id": "EC-CRO-001", "equipment_name_custom": "Digital Oscilloscope", "equipment_count": 14, "lab_status": "available" },
+    { "equipment_id": "EC-FGN-001", "equipment_name_custom": "Function Generator", "equipment_count": 10, "lab_status": "available" },
+    { "equipment_id": "EC-DMM-001", "equipment_name_custom": "Digital Multimeter", "equipment_count": 20, "lab_status": "available" },
+    { "equipment_id": "EC-BRD-001", "equipment_name_custom": "Breadboard", "equipment_count": 40, "lab_status": "available" },
+    { "equipment_id": "EC-SOL-001", "equipment_name_custom": "Soldering Station", "equipment_count": 8, "lab_status": "not_available" },
+    { "equipment_id": "EC-MCU-001", "equipment_name_custom": "Microcontroller Trainer", "equipment_count": 12, "lab_status": "available" }
+  ],
+  "Others": [
+    { "equipment_id": "OT-CHE-001", "equipment_name_custom": "Chemical Reagent Kit", "equipment_count": 25, "lab_status": "available" },
+    { "equipment_id": "OT-GPH-001", "equipment_name_custom": "Glassware Set", "equipment_count": 18, "lab_status": "available" },
+    { "equipment_id": "OT-PHP-001", "equipment_name_custom": "pH Meter", "equipment_count": 4, "lab_status": "available" },
+    { "equipment_id": "OT-HOT-001", "equipment_name_custom": "Hot Plate", "equipment_count": 6, "lab_status": "available" },
+    { "equipment_id": "OT-FUM-001", "equipment_name_custom": "Fume Hood", "equipment_count": 1, "lab_status": "not_available" },
+    { "equipment_id": "OT-ANA-001", "equipment_name_custom": "Analytical Balance", "equipment_count": 3, "lab_status": "available" }
+  ]
+}

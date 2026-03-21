@@ -1,0 +1,128 @@
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  background: #ffffff;
+  padding: 30px;
+  width: 360px;
+  border-radius: 10px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 5px;
+  color: #1e3c72;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.input-group label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  color: #999;
+  font-size: 13px;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: 0.3s;
+  background: #fff;
+  padding: 0 5px;
+}
+
+.input-group input:focus + label,
+.input-group input:valid + label {
+  top: -7px;
+  font-size: 11px;
+  color: #1e3c72;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #1e3c72;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #16315c;
+}
+
+.switch {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+.switch a {
+  color: #1e3c72;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-page .login-container {
+  width: 430px;
+}
+
+.login-info {
+  background: #f4f8ff;
+  border: 1px solid #d8e5ff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
+
+.login-info p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #2e466e;
+}
+
+.login-info ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #2e466e;
+  font-size: 13px;
+}
+
+.login-message {
+  min-height: 18px;
+  margin: 10px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: #b42318;
+}

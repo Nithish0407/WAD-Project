@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Equipment | BVRIT LabTrack</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <i class="fa-solid fa-flask"></i>
+      <span>BVRIT LabTrack</span>
+    </div>
+    <nav>
+      <a href="admin.html" class="home-link">Back To Dashboard</a>
+      <button class="logout-btn" id="logout-btn">Logout</button>
+    </nav>
+  </header>
+
+  <main class="content">
+    <h1>Manage Equipment</h1>
+    <p id="manage-page-message"></p>
+
+    <div class="table-box">
+      <form id="manage-form" class="manage-form">
+        <input type="hidden" id="manage-equipment-row-id">
+        <label>Equipment ID
+          <input id="manage-equipment-id" type="text" readonly>
+        </label>
+        <label>Lab
+          <input id="manage-lab-name" type="text" readonly>
+        </label>
+        <label>Equipment Name
+          <input id="manage-equipment-name" type="text" required>
+        </label>
+        <label>Quantity
+          <input id="manage-quantity" type="number" min="0" required>
+        </label>
+        <label>Available Units
+          <div class="number-stepper">
+            <button class="step-btn" id="available-decrement" type="button">-</button>
+            <input id="manage-available" type="number" min="0" required>
+            <button class="step-btn" id="available-increment" type="button">+</button>
+          </div>
+        </label>
+        <label>Category
+          <select id="manage-category" required>
+            <option value="available">available</option>
+            <option value="maintenance">maintenance</option>
+            <option value="out_of_service">out_of_service</option>
+          </select>
+        </label>
+        <label>Lab Status
+          <select id="manage-lab-status" required>
+            <option value="available">available</option>
+            <option value="not_available">not_available</option>
+          </select>
+        </label>
+        <div class="manage-actions">
+          <button class="action-btn" type="submit">Save Changes</button>
+          <button class="action-btn secondary" id="manage-cancel-btn" type="button">Cancel</button>
+        </div>
+      </form>
+      <p id="manage-message"></p>
+    </div>
+  </main>
+  <script src="api-base.js?v=2"></script>
+  <script src="manage.js?v=3"></script>
+</body>
+</html>

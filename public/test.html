@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lab Status</title>
+</head>
+<body>
+  <h1>Lab Status</h1>
+  <button onclick="getStatus()">Check Status</button>
+
+  <p id="output"></p>
+
+  <script>
+    function getStatus() {
+      fetch("http://localhost:5000/lab-status")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("output").innerText =
+            `Students: ${data.requiredStudents}, Status: ${data.status}`;
+        })
+        .catch(err => console.error(err));
+    }
+  </script>
+</body>
+</html>

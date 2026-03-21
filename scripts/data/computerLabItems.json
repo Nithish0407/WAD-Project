@@ -1,0 +1,14 @@
+[
+  { "equipment_id": "CL-CPU-001", "equipment_name_custom": "Desktop CPU", "equipment_count": 40, "lab_status": "available" },
+  { "equipment_id": "CL-MON-001", "equipment_name_custom": "LED Monitor", "equipment_count": 40, "lab_status": "available" },
+  { "equipment_id": "CL-KBD-001", "equipment_name_custom": "Keyboard", "equipment_count": 45, "lab_status": "available" },
+  { "equipment_id": "CL-MSE-001", "equipment_name_custom": "Optical Mouse", "equipment_count": 45, "lab_status": "available" },
+  { "equipment_id": "CL-UPS-001", "equipment_name_custom": "UPS Unit", "equipment_count": 12, "lab_status": "available" },
+  { "equipment_id": "CL-SWT-001", "equipment_name_custom": "Network Switch", "equipment_count": 4, "lab_status": "available" },
+  { "equipment_id": "CL-RTR-001", "equipment_name_custom": "Router", "equipment_count": 2, "lab_status": "available" },
+  { "equipment_id": "CL-PJT-001", "equipment_name_custom": "Projector", "equipment_count": 1, "lab_status": "available" },
+  { "equipment_id": "CL-PRN-001", "equipment_name_custom": "Laser Printer", "equipment_count": 2, "lab_status": "not_available" },
+  { "equipment_id": "CL-LAN-001", "equipment_name_custom": "LAN Cable Pack", "equipment_count": 60, "lab_status": "available" },
+  { "equipment_id": "CL-WBC-001", "equipment_name_custom": "Webcam", "equipment_count": 20, "lab_status": "available" },
+  { "equipment_id": "CL-HDP-001", "equipment_name_custom": "Headphone", "equipment_count": 30, "lab_status": "available" }
+]

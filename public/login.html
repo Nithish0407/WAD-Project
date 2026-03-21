@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Login</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body class="login-page">
+  <div class="container login-container">
+    <h2>Faculty Login</h2>
+    <p class="subtitle">BVRIT Lab Equipment Management System</p>
+
+    <form id="loginForm" onsubmit="return false" novalidate>
+      <div class="input-group">
+        <input type="email" id="email" required>
+        <label>Faculty Email (@bvrit.ac.in)</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="password" required>
+        <label>Password</label>
+      </div>
+
+      <button id="login-submit" type="button" onclick="handleLogin()">Login To Dashboard</button>
+      <p id="login-message" class="login-message"></p>
+
+      <p class="switch">
+        New faculty? <a href="signup.html">Create account</a>
+      </p>
+    </form>
+  </div>
+  <!-- Prefer local files when served by backend; fall back to /public/* when served from repo root via Live Server -->
+  <script src="api-base.js"></script>
+  <script>
+    // Use resolved API base from api-base.js (falls back to current origin)
+    const API_BASE = window.API_BASE || window.location.origin;
+    const messageEl = document.getElementById("login-message");
+    const submitBtn = document.getElementById("login-submit");
+    const formEl = document.getElementById("loginForm");
+
+    function setMessage(text, color) {
+      messageEl.textContent = text || "";
+      if (color) messageEl.style.color = color;
+    }
+
+    // Indicate that JS is loaded
+    setMessage("Ready to login", "#555");
+
+    async function handleLogin() {
+      console.log("handleLogin clicked");
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      setMessage("");
+      // Log values to verify they are captured
+      console.log("Captured credentials", { email, passwordLength: password.length });
+
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Logging in...";
+
+        console.log("Login: POST", `${API_BASE}/api/auth/login`, { email });
+        const response = await fetch(`${API_BASE}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const text = await response.text();
+        let payload;
+        try {
+          payload = JSON.parse(text);
+        } catch (e) {
+          throw new Error(`Backend did not return JSON (status ${response.status}): ${text}`);
+        }
+
+        if (!response.ok || !payload.success || !payload.data?.token) {
+          const message = payload?.error?.message || `Login failed (status ${response.status})`;
+          throw new Error(message);
+        }
+
+        localStorage.setItem("auth_token", payload.data.token);
+        localStorage.setItem("user_email", email);
+        setMessage("Login successful. Redirecting...", "#067647");
+        window.location.replace("/admin.html");
+      } catch (err) {
+        console.error("Login error:", err);
+        setMessage(err.message || "Unable to login", "#b42318");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Login To Dashboard";
+      }
+    }
+
+    // If already logged in, go straight to admin
+    if (localStorage.getItem("auth_token")) {
+      window.location.replace("/admin.html");
+    }
+
+    // Attach handlers
+    if (submitBtn) submitBtn.addEventListener("click", handleLogin);
+    if (formEl) formEl.addEventListener("submit", e => {
+      e.preventDefault();
+      handleLogin();
+    });
+    document.addEventListener("keydown", e => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleLogin();
+      }
+    });
+  </script>
+
+</body>
+</html>
