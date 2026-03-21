@@ -44,6 +44,11 @@ const authLimiter = rateLimit({
 app.use("/api/auth", authLimiter);
 
 app.use(express.static(path.join(__dirname, "public")));
+// Serve Bootstrap assets locally to avoid external CDN dependency
+app.use(
+  "/bootstrap",
+  express.static(path.join(__dirname, "node_modules", "bootstrap", "dist"))
+);
 
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
