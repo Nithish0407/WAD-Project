@@ -22,7 +22,10 @@ if (missing.length > 0) {
   process.exit(1);
 }
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 const app = express();
+app.set("jwtSecret", JWT_SECRET);
 
 // Disable Helmet's default CSP to allow inline scripts used by the frontend pages.
 app.use(helmet({ contentSecurityPolicy: false }));

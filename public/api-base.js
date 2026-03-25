@@ -10,16 +10,17 @@
   const storedBase = normalize(localStorage.getItem("api_base"));
 
   const defaultBackendPort = "5000";
-  const isDefaultBackendPort = window.location.port === defaultBackendPort;
+  const hostname = window.location.hostname;
+  const isLocalhost = ["localhost", "127.0.0.1", ""].includes(hostname);
   const sameOrigin = normalize(window.location.origin);
   const defaultBase = normalize(`http://localhost:${defaultBackendPort}`);
 
   const resolved =
     metaBase ||
     storedBase ||
-    (isDefaultBackendPort ? sameOrigin : null) ||
-    defaultBase ||
-    sameOrigin;
+    (isLocalhost ? defaultBase : sameOrigin) ||
+    sameOrigin ||
+    defaultBase;
 
   window.API_BASE = resolved;
 })();
