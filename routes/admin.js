@@ -7,11 +7,12 @@ const router = express.Router();
 
 router.get("/admin/user/activity", authenticate, (req, res, next) => {
   const userId = req.user.id;
-  const loginQuery = "SELECT COUNT(*) AS logins FROM audit_logs WHERE action = 'auth.login' AND actor_user_id = ?";
+  const loginQuery =
+    "SELECT COUNT(*) AS logins FROM app_records WHERE type = 'audit' AND action = 'auth.login' AND actor_user_id = ?";
   const equipmentQuery =
-    "SELECT COUNT(*) AS equipment_actions FROM audit_logs WHERE actor_user_id = ? AND entity_type = 'equipment'";
+    "SELECT COUNT(*) AS equipment_actions FROM app_records WHERE type = 'audit' AND actor_user_id = ? AND entity_type = 'equipment'";
   const latestLoginQuery =
-    "SELECT created_at FROM audit_logs WHERE action = 'auth.login' AND actor_user_id = ? ORDER BY created_at DESC LIMIT 1";
+    "SELECT created_at FROM app_records WHERE type = 'audit' AND action = 'auth.login' AND actor_user_id = ? ORDER BY created_at DESC LIMIT 1";
 
   db.query(loginQuery, [userId], (loginErr, loginRows) => {
     if (loginErr) return next(loginErr);
@@ -38,7 +39,7 @@ router.get("/admin/user/activity", authenticate, (req, res, next) => {
 });
 
 router.get("/admin/dashboard", authenticate, (req, res, next) => {
-  const labsQuery = "SELECT lab_name FROM faculty_labs WHERE faculty_id = ? ORDER BY lab_name";
+  const labsQuery = "SELECT lab_name FROM app_records WHERE type = 'lab_map' AND ref_user_id = ? ORDER BY lab_name";
   db.query(labsQuery, [req.user.id], (labsErr, labRows) => {
     if (labsErr) return next(labsErr);
 
@@ -62,8 +63,8 @@ router.get("/admin/dashboard", authenticate, (req, res, next) => {
     const equipmentQuery =
       `SELECT id, equipment_id, equipment_name_custom, equipment_name, equipment_count, lab_status, lab_name, status,
               total_quantity, available_quantity, updated_at
-       FROM equipment
-       WHERE lab_name IN (${placeholders})
+       FROM app_records
+       WHERE type = 'equipment' AND lab_name IN (${placeholders})
        ORDER BY updated_at DESC
        LIMIT 500`;
 
@@ -97,20 +98,20 @@ router.get("/admin/equipment/:id/logs", authenticate, (req, res, next) => {
     return fail(res, 400, "invalid equipment id");
   }
 
-  const equipmentQuery = "SELECT id, lab_name FROM equipment WHERE id = ? LIMIT 1";
+  const equipmentQuery = "SELECT id, lab_name FROM app_records WHERE type = 'equipment' AND id = ? LIMIT 1";
   db.query(equipmentQuery, [equipmentId], (eqErr, eqRows) => {
     if (eqErr) return next(eqErr);
     if (!eqRows || eqRows.length === 0) return fail(res, 404, "equipment not found");
 
     const labName = eqRows[0].lab_name;
-    const accessQuery = "SELECT 1 FROM faculty_labs WHERE faculty_id = ? AND lab_name = ? LIMIT 1";
+    const accessQuery = "SELECT 1 FROM app_records WHERE type = 'lab_map' AND ref_user_id = ? AND lab_name = ? LIMIT 1";
     db.query(accessQuery, [req.user.id, labName], (permErr, permRows) => {
       if (permErr) return next(permErr);
       if (!permRows || permRows.length === 0) return fail(res, 403, "No access to this equipment");
 
       const logsQuery =
         "SELECT id, action, actor_faculty_id, details, created_at " +
-        "FROM audit_logs WHERE entity_type = 'equipment' AND entity_id = ? " +
+        "FROM app_records WHERE type = 'audit' AND entity_type = 'equipment' AND entity_id = ? " +
         "ORDER BY created_at DESC";
       db.query(logsQuery, [equipmentId], (logErr, logRows) => {
         if (logErr) return next(logErr);

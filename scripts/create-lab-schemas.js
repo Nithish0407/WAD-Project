@@ -3,6 +3,9 @@ const path = require("path");
 const dotenv = require("dotenv");
 const mysql = require("mysql2/promise");
 
+console.log("create-lab-schemas: no-op (single DB mode). All labs share DB_NAME now.");
+process.exit(0);
+
 dotenv.config();
 
 const inventoryPath = path.join(__dirname, "data", "labInventory.json");

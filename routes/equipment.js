@@ -33,13 +33,14 @@ function getLabEquipment(req, res, next) {
     params.push(`%${search}%`);
   }
 
+  where.push("type = 'equipment'");
   const whereClause = where.length ? `WHERE ${where.join(" AND ")}` : "";
   const query =
     `SELECT id, equipment_id, equipment_name_custom, equipment_count, lab_status, lab_name, equipment_name, status, total_quantity, available_quantity, last_verified_at, verified_by, created_at, updated_at
-     FROM equipment ${whereClause}
+     FROM app_records ${whereClause}
      ORDER BY lab_name, equipment_name
      LIMIT ? OFFSET ?`;
-  const countQuery = `SELECT COUNT(*) AS total FROM equipment ${whereClause}`;
+  const countQuery = `SELECT COUNT(*) AS total FROM app_records ${whereClause}`;
 
   db.query(countQuery, params, (countErr, countRows) => {
     if (countErr) return next(countErr);
@@ -53,7 +54,7 @@ function getLabEquipment(req, res, next) {
 router.get("/equipment", authenticate, getLabEquipment);
 
 router.get("/equipment/:id", authenticate, (req, res, next) => {
-  db.query("SELECT * FROM equipment WHERE id = ?", [req.params.id], (err, rows) => {
+  db.query("SELECT * FROM app_records WHERE type = 'equipment' AND id = ?", [req.params.id], (err, rows) => {
     if (err) return next(err);
     if (!rows || rows.length === 0) return fail(res, 404, "not found");
     return ok(res, rows[0]);
@@ -79,7 +80,7 @@ router.post("/equipment", authenticate, validateEquipmentPayload, ensureFacultyC
   const available = available_quantity === undefined ? total : Number(available_quantity);
 
   const query =
-    "INSERT INTO equipment (equipment_id, equipment_name_custom, equipment_count, lab_status, lab_name, equipment_name, status, total_quantity, available_quantity, last_verified_at, verified_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
+    "INSERT INTO app_records (type, equipment_id, equipment_name_custom, equipment_count, lab_status, lab_name, equipment_name, status, total_quantity, available_quantity, last_verified_at, verified_by) VALUES ('equipment', ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
 
   db.query(
     query,
@@ -166,7 +167,7 @@ router.put("/equipment/:id", authenticate, validateEquipmentPayload, ensureFacul
   const available = available_quantity === undefined ? total : Number(available_quantity);
 
   const query =
-    "UPDATE equipment SET equipment_id = ?, equipment_name_custom = ?, equipment_count = ?, lab_status = ?, lab_name = ?, equipment_name = ?, status = ?, total_quantity = ?, available_quantity = ?, last_verified_at = NOW(), verified_by = ? WHERE id = ?";
+    "UPDATE app_records SET equipment_id = ?, equipment_name_custom = ?, equipment_count = ?, lab_status = ?, lab_name = ?, equipment_name = ?, status = ?, total_quantity = ?, available_quantity = ?, last_verified_at = NOW(), verified_by = ? WHERE type = 'equipment' AND id = ?";
   db.query(
     query,
     [equipment_id || null, resolvedName, resolvedCount, resolvedLabStatus, lab_name, resolvedName, status || "available", total, available, req.user.id, id],
@@ -232,7 +233,7 @@ router.put("/equipment/:id/availability", authenticate, (req, res, next) => {
     return fail(res, 400, "available_quantity must be a non-negative integer");
   }
 
-  const q = "SELECT * FROM equipment WHERE id = ?";
+  const q = "SELECT * FROM app_records WHERE type = 'equipment' AND id = ?";
   db.query(q, [id], (err, rows) => {
     if (err) return next(err);
     if (!rows || rows.length === 0) return fail(res, 404, "not found");
@@ -243,13 +244,13 @@ router.put("/equipment/:id/availability", authenticate, (req, res, next) => {
       return fail(res, 400, "available_quantity cannot exceed total_quantity");
     }
 
-    const check = "SELECT 1 FROM faculty_labs WHERE faculty_id = ? AND lab_name = ? LIMIT 1";
+    const check = "SELECT 1 FROM app_records WHERE type = 'lab_map' AND ref_user_id = ? AND lab_name = ? LIMIT 1";
     db.query(check, [req.user.id, lab_name], (permErr, permRows) => {
       if (permErr) return next(permErr);
       if (!permRows || permRows.length === 0) return fail(res, 403, "No access to manage this lab");
 
-      const update =
-        "UPDATE equipment SET status = ?, available_quantity = ?, last_verified_at = NOW(), verified_by = ? WHERE id = ?";
+        const update =
+          "UPDATE app_records SET status = ?, available_quantity = ?, last_verified_at = NOW(), verified_by = ? WHERE type = 'equipment' AND id = ?";
       db.query(update, [status, Number(available_quantity), req.user.id, id], updateErr => {
         if (updateErr) return next(updateErr);
 
@@ -281,18 +282,18 @@ router.delete("/equipment/:id", authenticate, (req, res, next) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id) || id <= 0) return fail(res, 400, "invalid id");
 
-  db.query("SELECT lab_name, equipment_id, equipment_name_custom, equipment_name FROM equipment WHERE id = ?", [id], (readErr, rows) => {
+  db.query("SELECT lab_name, equipment_id, equipment_name_custom, equipment_name FROM app_records WHERE type = 'equipment' AND id = ?", [id], (readErr, rows) => {
     if (readErr) return next(readErr);
     if (!rows || rows.length === 0) return fail(res, 404, "not found");
 
     const row = rows[0];
     const labName = row.lab_name;
-    const perm = "SELECT 1 FROM faculty_labs WHERE faculty_id = ? AND lab_name = ? LIMIT 1";
+    const perm = "SELECT 1 FROM app_records WHERE type = 'lab_map' AND ref_user_id = ? AND lab_name = ? LIMIT 1";
     db.query(perm, [req.user.id, labName], (permErr, permRows) => {
       if (permErr) return next(permErr);
       if (!permRows || permRows.length === 0) return fail(res, 403, "No access to manage this lab");
 
-      db.query("DELETE FROM equipment WHERE id = ?", [id], (delErr, delRes) => {
+      db.query("DELETE FROM app_records WHERE type = 'equipment' AND id = ?", [id], (delErr, delRes) => {
         if (delErr) return next(delErr);
         if (delRes.affectedRows === 0) return fail(res, 404, "not found");
 
@@ -317,7 +318,7 @@ router.post("/labs/assign", authenticate, (req, res, next) => {
   if (!user_id || !lab_name) return fail(res, 400, "user_id and lab_name are required");
   if (Number(user_id) !== Number(req.user.id)) return fail(res, 403, "you can only assign labs to your own account");
 
-  const query = "INSERT INTO faculty_labs (faculty_id, lab_name) VALUES (?, ?)";
+  const query = "INSERT INTO app_records (type, ref_user_id, lab_name) VALUES ('lab_map', ?, ?)";
   db.query(query, [user_id, lab_name], (err, result) => {
     if (err) {
       if (err.code === "ER_DUP_ENTRY") return fail(res, 409, "already assigned");
