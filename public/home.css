@@ -7,12 +7,12 @@
 
 /* NAVBAR */
 .navbar {
-  height: 60px;
-  background: linear-gradient(135deg, #0f4c81, #1e6bb8);
+  min-height: 64px;
+  background: linear-gradient(120deg, #0f4c81, #1e6bb8);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 40px;
+  padding: 0 32px;
   color: white;
 }
 
@@ -24,13 +24,19 @@
   font-weight: bold;
 }
 
-nav a {
-  margin-right: 20px;
-  cursor: pointer;
-  opacity: 0.9;
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-nav a.active {
+.nav-actions .nav-link {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-actions .nav-link.active {
   text-decoration: underline;
 }
 

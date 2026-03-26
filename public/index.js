@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       loginBtn.addEventListener("click", () => window.location.href = "admin.html");
     }
     if (logoutBtn) {
-      logoutBtn.style.display = "inline-block";
+      logoutBtn.classList.remove("d-none");
       logoutBtn.addEventListener("click", () => {
         localStorage.removeItem("auth_token");
         localStorage.removeItem("user_email");
@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
       loginBtn.addEventListener("click", () => window.location.href = "login.html");
     }
     if (logoutBtn) {
-      logoutBtn.style.display = "none";
+      logoutBtn.classList.add("d-none");
     }
   }
 

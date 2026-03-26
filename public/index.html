@@ -12,24 +12,21 @@
 </head>
 <body>
 <div class="container fluid">
-  <div class="row">
-    <div class=" col-lg-3 col-xs-2 col-12">
-      
   <!-- NAVBAR -->
-  <header class="navbar">
+  <header class="navbar shadow-sm">
     <div class="logo">
       <i class="fa-solid fa-flask"></i>
       <span>Lab Equipment Management System</span>
     </div>
 
-    <nav>
-      <a class="active">Home</a>
-      <button id="login-btn" class="login-btn">Login</button>
-      <button id="logout-btn" class="login-btn" style="display: none;">Logout</button>
+    <nav class="nav-actions">
+      <a class="nav-link active">Home</a>
+      <div class="d-flex gap-2">
+        <button id="login-btn" class="btn btn-light btn-sm">Login</button>
+        <button id="logout-btn" class="btn btn-outline-light btn-sm d-none">Logout</button>
+      </div>
     </nav>
   </header>
-  </div>
-  </div>
 
   <!-- HERO -->
   <section class="hero">
