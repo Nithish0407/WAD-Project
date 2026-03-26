@@ -22,8 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (token) {
     if (loginBtn) {
-      loginBtn.textContent = "Dashboard";
-      loginBtn.addEventListener("click", () => window.location.href = "admin.html");
+      loginBtn.style.display = "none";
     }
     if (logoutBtn) {
       logoutBtn.classList.remove("d-none");
