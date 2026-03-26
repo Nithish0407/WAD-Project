@@ -41,6 +41,7 @@ nav a.active {
   color: white;
   border-radius: 4px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 /* HERO */

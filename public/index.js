@@ -1,9 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("auth_token");
-  if (!token) {
-    window.location.href = "login.html";
-    return;
-  }
 
   const buttons = document.querySelectorAll(".card button");
 
@@ -21,15 +17,31 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  const loginBtn = document.querySelector(".login-btn");
-  if (loginBtn) {
-    loginBtn.textContent = "Logout";
-    loginBtn.addEventListener("click", () => {
-      localStorage.removeItem("auth_token");
-      localStorage.removeItem("user_email");
-      localStorage.removeItem("managed_lab");
-      window.location.href = "login.html";
-    });
+  const loginBtn = document.getElementById("login-btn");
+  const logoutBtn = document.getElementById("logout-btn");
+
+  if (token) {
+    if (loginBtn) {
+      loginBtn.textContent = "Dashboard";
+      loginBtn.addEventListener("click", () => window.location.href = "admin.html");
+    }
+    if (logoutBtn) {
+      logoutBtn.style.display = "inline-block";
+      logoutBtn.addEventListener("click", () => {
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("user_email");
+        localStorage.removeItem("managed_lab");
+        window.location.href = "login.html";
+      });
+    }
+  } else {
+    if (loginBtn) {
+      loginBtn.textContent = "Login";
+      loginBtn.addEventListener("click", () => window.location.href = "login.html");
+    }
+    if (logoutBtn) {
+      logoutBtn.style.display = "none";
+    }
   }
 
 });

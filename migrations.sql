@@ -241,3 +241,24 @@ CREATE TABLE IF NOT EXISTS audit_logs (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   CONSTRAINT fk_audit_actor FOREIGN KEY (actor_user_id) REFERENCES users(id) ON DELETE SET NULL
 );
+
+-- View: faculty activity (registration and last login)
+DROP VIEW IF EXISTS faculty_activity;
+CREATE VIEW faculty_activity AS
+SELECT
+  u.id,
+  u.name,
+  u.faculty_id,
+  u.department,
+  u.email,
+  u.status AS user_status,
+  (SELECT MIN(a.created_at)
+     FROM audit_logs a
+    WHERE a.entity_type = 'user'
+      AND a.entity_id = u.id
+      AND a.action = 'auth.register') AS registered_at,
+  (SELECT MAX(a.created_at)
+     FROM audit_logs a
+    WHERE a.actor_user_id = u.id
+      AND a.action = 'auth.login') AS last_login_at
+FROM users u;
