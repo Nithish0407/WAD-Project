@@ -6,7 +6,6 @@ const { authenticate } = require("../middleware/auth");
 const { validateLogin, validateRegister } = require("../middleware/validate");
 const { created, fail, ok } = require("../utils/response");
 const { logAudit } = require("../utils/audit");
-const { upsertFacultyUser, updateFacultyStatus } = require("../utils/facultySchemaSync");
 
 const router = express.Router();
 
@@ -24,23 +23,11 @@ router.post("/auth/register", validateRegister, (req, res, next) => {
 
   const passwordHash = bcrypt.hashSync(password, 10);
   const query =
-    "INSERT INTO users (name, faculty_id, department, email, password_hash, status) VALUES (?, ?, ?, ?, ?, 'active')";
-  return db.query(query, [name, faculty_id, department, email, passwordHash], async (err, result) => {
+    "INSERT INTO app_records (type, name, faculty_id, department, email, password_hash, user_status) VALUES ('user', ?, ?, ?, ?, ?, 'active')";
+  return db.query(query, [name, faculty_id, department, email, passwordHash], (err, result) => {
     if (err) {
       if (err.code === "ER_DUP_ENTRY") return fail(res, 409, "faculty_id or email already exists");
       return next(err);
-    }
-    try {
-      await upsertFacultyUser({
-        main_user_id: result.insertId,
-        name,
-        faculty_id,
-        department,
-        email,
-        status: "active"
-      });
-    } catch (syncErr) {
-      return next(syncErr);
     }
 
     logAudit({
@@ -63,7 +50,8 @@ router.post("/auth/login", validateLogin, (req, res, next) => {
     return fail(res, 403, "email domain not allowed");
   }
 
-  const query = "SELECT id, name, faculty_id, department, email, password_hash, status FROM users WHERE email = ?";
+  const query =
+    "SELECT id, name, faculty_id, department, email, password_hash, user_status AS status FROM app_records WHERE type = 'user' AND email = ?";
   return db.query(query, [email], (err, results) => {
     if (err) return next(err);
     if (!results || results.length === 0) return fail(res, 401, "invalid credentials");
@@ -100,7 +88,7 @@ router.post("/auth/login", validateLogin, (req, res, next) => {
 });
 
 router.get("/auth/me", authenticate, (req, res, next) => {
-  const q = "SELECT lab_name FROM faculty_labs WHERE faculty_id = ? ORDER BY lab_name";
+  const q = "SELECT lab_name FROM app_records WHERE type = 'lab_map' AND ref_user_id = ? ORDER BY lab_name";
   return db.query(q, [req.user.id], (err, rows) => {
     if (err) return next(err);
     const labs = (rows || []).map(r => r.lab_name);
@@ -114,15 +102,10 @@ router.patch("/auth/status/:userId", authenticate, (req, res, next) => {
   if (!["active", "inactive"].includes(status)) return fail(res, 400, "status must be active or inactive");
   if (Number(userId) !== Number(req.user.id)) return fail(res, 403, "you can only change your own status");
 
-  const q = "UPDATE users SET status = ? WHERE id = ?";
-  return db.query(q, [status, userId], async (err, r) => {
+  const q = "UPDATE app_records SET user_status = ? WHERE type = 'user' AND id = ?";
+  return db.query(q, [status, userId], (err, r) => {
     if (err) return next(err);
     if (r.affectedRows === 0) return fail(res, 404, "user not found");
-    try {
-      await updateFacultyStatus(Number(userId), status);
-    } catch (syncErr) {
-      return next(syncErr);
-    }
 
     logAudit({
       actorUserId: req.user.id,

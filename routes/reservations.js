@@ -11,7 +11,8 @@ router.post("/reservations", authenticate, validateReservationPayload, (req, res
   const { equipment_id, quantity, start_at, end_at } = req.body;
   const qty = Number(quantity || 1);
 
-  const q = "INSERT INTO reservations (user_id, equipment_id, quantity, status, start_at, end_at) VALUES (?, ?, ?, 'pending', ?, ?)";
+  const q =
+    "INSERT INTO app_records (type, ref_user_id, ref_equipment_id, res_quantity, status, start_at, end_at) VALUES ('reservation', ?, ?, ?, 'pending', ?, ?)";
   db.query(q, [req.user.id, equipment_id, qty, start_at, end_at], (err, result) => {
     if (err) return next(err);
 
@@ -44,12 +45,13 @@ router.get("/reservations", authenticate, (req, res, next) => {
     where.push("r.status = ?");
     params.push(status);
   }
+  where.push("r.type = 'reservation'");
   const whereClause = where.length ? `WHERE ${where.join(" AND ")}` : "";
   const q =
-    "SELECT r.*, e.equipment_name, e.lab_name, u.name AS user_name, u.faculty_id " +
-    "FROM reservations r " +
-    "JOIN equipment e ON r.equipment_id = e.id " +
-    "JOIN users u ON r.user_id = u.id " +
+    "SELECT r.id, r.status, r.res_quantity AS quantity, r.ref_equipment_id AS equipment_id, r.ref_user_id AS user_id, r.start_at, r.end_at, e.equipment_name, e.lab_name, u.name AS user_name, u.faculty_id " +
+    "FROM app_records r " +
+    "JOIN app_records e ON e.type = 'equipment' AND r.ref_equipment_id = e.id " +
+    "JOIN app_records u ON u.type = 'user' AND r.ref_user_id = u.id " +
     `${whereClause} ORDER BY r.id DESC`;
 
   db.query(q, params, (err, rows) => {
@@ -60,9 +62,10 @@ router.get("/reservations", authenticate, (req, res, next) => {
 
 router.get("/reservations/me", authenticate, (req, res, next) => {
   const q =
-    "SELECT r.*, e.equipment_name, e.lab_name FROM reservations r " +
-    "JOIN equipment e ON r.equipment_id = e.id " +
-    "WHERE r.user_id = ? ORDER BY r.id DESC";
+    "SELECT r.id, r.status, r.res_quantity AS quantity, r.ref_equipment_id AS equipment_id, r.start_at, r.end_at, e.equipment_name, e.lab_name " +
+    "FROM app_records r " +
+    "JOIN app_records e ON e.type = 'equipment' AND r.ref_equipment_id = e.id " +
+    "WHERE r.type = 'reservation' AND r.ref_user_id = ? ORDER BY r.id DESC";
   db.query(q, [req.user.id], (err, rows) => {
     if (err) return next(err);
     return ok(res, rows);
@@ -75,15 +78,15 @@ function updateReservationStatus(targetStatus) {
     if (!Number.isInteger(id) || id <= 0) return fail(res, 400, "invalid reservation id");
 
     const findQuery =
-      "SELECT r.id, r.status, r.quantity, r.equipment_id, e.lab_name, e.available_quantity, e.total_quantity " +
-      "FROM reservations r JOIN equipment e ON r.equipment_id = e.id WHERE r.id = ?";
+      "SELECT r.id, r.status, r.res_quantity AS quantity, r.ref_equipment_id AS equipment_id, e.lab_name, e.available_quantity, e.total_quantity " +
+      "FROM app_records r JOIN app_records e ON r.ref_equipment_id = e.id AND e.type = 'equipment' WHERE r.type = 'reservation' AND r.id = ?";
 
     db.query(findQuery, [id], (findErr, rows) => {
       if (findErr) return next(findErr);
       if (!rows || rows.length === 0) return fail(res, 404, "not found");
 
       const reservation = rows[0];
-      const permQuery = "SELECT 1 FROM faculty_labs WHERE faculty_id = ? AND lab_name = ? LIMIT 1";
+      const permQuery = "SELECT 1 FROM app_records WHERE type = 'lab_map' AND ref_user_id = ? AND lab_name = ? LIMIT 1";
       db.query(permQuery, [req.user.id, reservation.lab_name], (permErr, permRows) => {
         if (permErr) return next(permErr);
         if (!permRows || permRows.length === 0) return fail(res, 403, "No access to manage this lab");
@@ -99,7 +102,7 @@ function updateReservationStatus(targetStatus) {
         db.beginTransaction(txErr => {
           if (txErr) return next(txErr);
 
-          const updateReservation = "UPDATE reservations SET status = ? WHERE id = ?";
+          const updateReservation = "UPDATE app_records SET status = ? WHERE type = 'reservation' AND id = ?";
           db.query(updateReservation, [targetStatus, id], (upErr) => {
             if (upErr) {
               return db.rollback(() => next(upErr));
@@ -124,7 +127,7 @@ function updateReservationStatus(targetStatus) {
 
             if (targetStatus === "approved") {
               const updateEquipment =
-                "UPDATE equipment SET available_quantity = available_quantity - ? WHERE id = ? AND available_quantity >= ?";
+                "UPDATE app_records SET available_quantity = available_quantity - ? WHERE type = 'equipment' AND id = ? AND available_quantity >= ?";
               db.query(updateEquipment, [reservation.quantity, reservation.equipment_id, reservation.quantity], (eqErr, eqRes) => {
                 if (eqErr) return db.rollback(() => next(eqErr));
                 if (!eqRes || eqRes.affectedRows === 0) {
@@ -149,7 +152,8 @@ router.put("/reservations/:id/cancel", authenticate, (req, res, next) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id) || id <= 0) return fail(res, 400, "invalid reservation id");
 
-  const q = "UPDATE reservations SET status = 'cancelled' WHERE id = ? AND user_id = ? AND status = 'pending'";
+  const q =
+    "UPDATE app_records SET status = 'cancelled' WHERE type = 'reservation' AND id = ? AND ref_user_id = ? AND status = 'pending'";
   db.query(q, [id, req.user.id], (err, result) => {
     if (err) return next(err);
     if (!result || result.affectedRows === 0) return fail(res, 404, "not found");
