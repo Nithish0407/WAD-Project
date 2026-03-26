@@ -11,7 +11,7 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-<div class="container fluid">
+<div class="container-fluid px-0">
   <!-- NAVBAR -->
   <header class="navbar shadow-sm">
     <div class="logo">
@@ -19,9 +19,9 @@
       <span>Lab Equipment Management System</span>
     </div>
 
-    <nav class="nav-actions">
+    <nav class="nav-actions flex-wrap">
       <a class="nav-link active">Home</a>
-      <div class="d-flex gap-2">
+      <div class="d-flex gap-2 mt-2 mt-md-0">
         <button id="login-btn" class="btn btn-light btn-sm">Login</button>
         <button id="logout-btn" class="btn btn-outline-light btn-sm d-none">Logout</button>
       </div>
@@ -39,50 +39,74 @@
   </section>
 
   <!-- DEPARTMENTS -->
-  <section class="departments">
+  <section class="departments container py-4">
     <h2>Select Your Department</h2>
 
-    <div class="card-grid">
-      <div class="card">
-        <img src= "cse.jpeg" alt="CSE Lab">
-        <h3>CSE Lab</h3>
-        <p>Computer Science & Engineering</p>
-        <button data-page = "computer.html">View Equipment</button>
+    <div class="row g-4">
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <img src= "cse.jpeg" class="card-img-top" alt="CSE Lab">
+          <div class="card-body">
+            <h3 class="card-title">CSE Lab</h3>
+            <p class="card-text">Computer Science & Engineering</p>
+            <button class="btn btn-primary w-100" data-page = "computer.html">View Equipment</button>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <img src="civil.jpeg" alt="Civil Lab">
-        <h3>Civil Lab</h3>
-        <p>Civil Engineering</p>
-       <button data-page = "civil.html">View Equipment</button>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <img src="civil.jpeg" class="card-img-top" alt="Civil Lab">
+          <div class="card-body">
+            <h3 class="card-title">Civil Lab</h3>
+            <p class="card-text">Civil Engineering</p>
+            <button class="btn btn-primary w-100" data-page = "civil.html">View Equipment</button>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <img src="mech.jpeg" alt="Mechanical Lab">
-        <h3>Mechanical Lab</h3>
-        <p>Mechanical Engineering</p>
-       <button data-page = "mechanical.html">View Equipment</button>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <img src="mech.jpeg" class="card-img-top" alt="Mechanical Lab">
+          <div class="card-body">
+            <h3 class="card-title">Mechanical Lab</h3>
+            <p class="card-text">Mechanical Engineering</p>
+            <button class="btn btn-primary w-100" data-page = "mechanical.html">View Equipment</button>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <img src="eee.jpeg" alt="EEE Lab">
-        <h3>EEE Lab</h3>
-        <p>Electrical & Electronics Engineering</p>
-       <button data-page = "electrical.html">View Equipment</button>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <img src="eee.jpeg" class="card-img-top" alt="EEE Lab">
+          <div class="card-body">
+            <h3 class="card-title">EEE Lab</h3>
+            <p class="card-text">Electrical & Electronics Engineering</p>
+            <button class="btn btn-primary w-100" data-page = "electrical.html">View Equipment</button>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <img src="ece.jpeg" alt="ECE Lab">
-        <h3>ECE Lab</h3>
-        <p>Electronics & Communication Engineering</p>
-       <button data-page = "electronics.html">View Equipment</button>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <img src="ece.jpeg" class="card-img-top" alt="ECE Lab">
+          <div class="card-body">
+            <h3 class="card-title">ECE Lab</h3>
+            <p class="card-text">Electronics & Communication Engineering</p>
+            <button class="btn btn-primary w-100" data-page = "electronics.html">View Equipment</button>
+          </div>
+        </div>
       </div>
 
-      <div class="card">
-        <img src="chemical.jpeg" alt="Chemical Lab">
-        <h3>Chemical Lab</h3>
-        <p>Chemical Engineering</p>
-        <button data-page = "chemical.html">View Equipment</button>
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <img src="chemical.jpeg" class="card-img-top" alt="Chemical Lab">
+          <div class="card-body">
+            <h3 class="card-title">Chemical Lab</h3>
+            <p class="card-text">Chemical Engineering</p>
+            <button class="btn btn-primary w-100" data-page = "chemical.html">View Equipment</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
