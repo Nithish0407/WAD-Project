@@ -16,80 +16,91 @@
       <span id="lab-header-title">Lab Equipment Checker</span>
     </div>
 
-    <nav>
-      <span style="flex:1"></span>
-      <button id="back-btn" class="login-btn" type="button" style="margin-right:10px;">Back</button>
-      <button id="logout-btn" class="login-btn" type="button">Logout</button>
+    <nav class="d-flex align-items-center gap-2">
+      <button id="back-btn" class="btn btn-light btn-sm" type="button">Back</button>
+      <button id="logout-btn" class="btn btn-outline-light btn-sm" type="button">Logout</button>
     </nav>
   </header>
 
-  <section class="results">
-    <h2 id="lab-results-title">Lab Equipment</h2>
-    <p id="lab-results-status">Loading...</p>
+  <section class="results container-fluid px-3 px-md-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-xl-11">
+        <h2 id="lab-results-title">Lab Equipment</h2>
+        <p id="lab-results-status">Loading...</p>
 
-    <div class="equipment-form-wrap" style="display: none;">
-      <h3 id="form-title">Add Equipment</h3>
-      <form id="equipment-form" class="equipment-form">
-        <div class="form-grid">
-          <div class="form-field">
-            <label for="equipment-id-input">Equipment ID</label>
-            <input id="equipment-id-input" type="text" placeholder="CSE-001">
+        <div class="equipment-form-wrap" style="display: none;">
+          <h3 id="form-title">Add Equipment</h3>
+          <form id="equipment-form" class="row g-3">
+            <div class="col-12 col-md-4">
+              <label for="equipment-id-input" class="form-label">Equipment ID</label>
+              <input id="equipment-id-input" type="text" class="form-control" placeholder="CSE-001">
+            </div>
+            <div class="col-12 col-md-4">
+              <label for="equipment-name-input" class="form-label">Equipment Name</label>
+              <input id="equipment-name-input" type="text" class="form-control" placeholder="Oscilloscope" required>
+            </div>
+            <div class="col-12 col-md-2">
+              <label for="equipment-count-input" class="form-label">Equipment Count</label>
+              <input id="equipment-count-input" type="number" min="0" class="form-control" value="1" required>
+            </div>
+            <div class="col-12 col-md-2">
+              <label for="lab-status-input" class="form-label">Lab Status</label>
+              <select id="lab-status-input" class="form-select" required>
+                <option value="available">available</option>
+                <option value="not_available">not_available</option>
+              </select>
+            </div>
+            <div class="col-12 d-flex gap-2 flex-wrap">
+              <button id="save-equipment-btn" class="btn btn-primary" type="submit">Save</button>
+              <button id="cancel-edit-btn" class="btn btn-outline-secondary" type="button">Cancel Edit</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="row g-3 stats-grid">
+          <div class="col-6 col-lg-3">
+            <div class="stat-card h-100">
+              <p>Total Equipment Entries</p>
+              <h3 id="stat-total-equipment">0</h3>
+            </div>
           </div>
-          <div class="form-field">
-            <label for="equipment-name-input">Equipment Name</label>
-            <input id="equipment-name-input" type="text" placeholder="Oscilloscope" required>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card h-100">
+              <p>Total Equipment Count</p>
+              <h3 id="stat-total-units">0</h3>
+            </div>
           </div>
-          <div class="form-field">
-            <label for="equipment-count-input">Equipment Count</label>
-            <input id="equipment-count-input" type="number" min="0" value="1" required>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card h-100">
+              <p>Available Units</p>
+              <h3 id="stat-available-units">0</h3>
+            </div>
           </div>
-          <div class="form-field">
-            <label for="lab-status-input">Lab Status</label>
-            <select id="lab-status-input" required>
-              <option value="available">available</option>
-              <option value="not_available">not_available</option>
-            </select>
+          <div class="col-6 col-lg-3">
+            <div class="stat-card h-100">
+              <p>Not Available Units</p>
+              <h3 id="stat-unavailable-units">0</h3>
+            </div>
           </div>
         </div>
-        <div class="form-actions">
-          <button id="save-equipment-btn" class="login-btn" type="submit">Save</button>
-          <button id="cancel-edit-btn" class="login-btn" type="button">Cancel Edit</button>
+
+        <div class="results-table-wrap mt-3">
+          <div class="table-responsive">
+            <table class="results-table table table-striped table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Equipment ID</th>
+                  <th>Lab</th>
+                  <th>Equipment Name</th>
+                  <th>Available Units</th>
+                  <th>Working Condition</th>
+                </tr>
+              </thead>
+              <tbody id="lab-results-body"></tbody>
+            </table>
+          </div>
         </div>
-      </form>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card">
-        <p>Total Equipment Entries</p>
-        <h3 id="stat-total-equipment">0</h3>
       </div>
-      <div class="stat-card">
-        <p>Total Equipment Count</p>
-        <h3 id="stat-total-units">0</h3>
-      </div>
-      <div class="stat-card">
-        <p>Available Units</p>
-        <h3 id="stat-available-units">0</h3>
-      </div>
-      <div class="stat-card">
-        <p>Not Available Units</p>
-        <h3 id="stat-unavailable-units">0</h3>
-      </div>
-    </div>
-
-    <div class="results-table-wrap">
-      <table class="results-table">
-        <thead>
-          <tr>
-            <th>Equipment ID</th>
-            <th>Lab</th>
-            <th>Equipment Name</th>
-            <th>Available Units</th>
-            <th>Working Condition</th>
-          </tr>
-        </thead>
-        <tbody id="lab-results-body"></tbody>
-      </table>
     </div>
   </section>
 

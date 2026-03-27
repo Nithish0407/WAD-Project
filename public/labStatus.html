@@ -9,36 +9,38 @@
     body {
       font-family: Arial, sans-serif;
       background: #f4f6f8;
+      min-height: 100vh;
       display: flex;
-      justify-content: center;
       align-items: center;
-      height: 100vh;
+      justify-content: center;
+      padding: 16px;
     }
-    .card {
+    .status-card {
       background: white;
-      padding: 30px;
-      border-radius: 10px;
-      width: 320px;
+      padding: 24px 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 360px;
       text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
     }
     .status {
       font-size: 20px;
-      margin-top: 15px;
-      font-weight: bold;
+      margin-top: 12px;
+      font-weight: 700;
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2>🧪 Lab Status</h2>
-    <p id="students">Loading...</p>
-    <div id="status" class="status"></div>
+  <div class="status-card">
+    <h2 class="mb-2">🧪 Lab Status</h2>
+    <p id="students" class="mb-1 text-muted">Loading...</p>
+    <div id="status" class="status text-primary">...</div>
   </div>
 
   <script>
-    fetch("http://localhost:5000/lab-status")
+    fetch("/lab-status")
       .then(res => res.json())
       .then(data => {
         document.getElementById("students").innerText =

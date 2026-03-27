@@ -23,93 +23,106 @@
     </nav>
   </header>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <a class="side-link active" data-view="dashboard" href="#"><i class="fa-solid fa-house"></i> Dashboard</a>
-      <a class="side-link" data-view="equipment-manage" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Manage Equipment</a>
-      <a class="side-link" data-view="equipment-logs" href="#"><i class="fa-solid fa-clock-rotate-left"></i> Equipment Logs</a>
-      <a class="side-link" data-view="users" href="#"><i class="fa-solid fa-users"></i> Manage Users</a>
-    </aside>
+  <div class="layout container-fluid px-0">
+    <div class="row gx-0">
+      <aside class="sidebar col-12 col-lg-2">
+        <a class="side-link active" data-view="dashboard" href="#"><i class="fa-solid fa-house"></i> Dashboard</a>
+        <a class="side-link" data-view="equipment-manage" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Manage Equipment</a>
+        <a class="side-link" data-view="equipment-logs" href="#"><i class="fa-solid fa-clock-rotate-left"></i> Equipment Logs</a>
+        <a class="side-link" data-view="users" href="#"><i class="fa-solid fa-users"></i> Manage Users</a>
+      </aside>
 
-    <main class="content">
-      <h1>Dashboard</h1>
-      <p id="admin-message"></p>
-      <p class="session-meta">
-        Faculty ID: <strong id="admin-faculty-id">-</strong> |
-        Email: <strong id="admin-email">-</strong> |
-        Department: <strong id="admin-department">-</strong> |
-        Labs: <strong id="admin-labs">-</strong>
-      </p>
+      <main class="content col-12 col-lg-10">
+        <div class="container-fluid px-0">
+          <h1>Dashboard</h1>
+          <p id="admin-message"></p>
+          <p class="session-meta">
+            Faculty ID: <strong id="admin-faculty-id">-</strong> |
+            Email: <strong id="admin-email">-</strong> |
+            Department: <strong id="admin-department">-</strong> |
+            Labs: <strong id="admin-labs">-</strong>
+          </p>
 
-      <div class="table-box utility-panel" id="utility-panel">
-        <h2 id="utility-title">Dashboard</h2>
-        <div id="utility-content"></div>
-      </div>
+          <div class="table-box utility-panel" id="utility-panel">
+            <h2 id="utility-title">Dashboard</h2>
+            <div id="utility-content"></div>
+          </div>
 
-      <div class="stats">
-        <div class="stat-card">
-          <i class="fa-solid fa-wrench"></i>
-          <p>Total Equipment</p>
-          <h2 id="total-equipments">0</h2>
+          <div class="stats row g-3 g-md-4">
+            <div class="col-6 col-md-3">
+              <div class="stat-card h-100">
+                <i class="fa-solid fa-wrench"></i>
+                <p>Total Equipment</p>
+                <h2 id="total-equipments">0</h2>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="stat-card green h-100">
+                <i class="fa-solid fa-check"></i>
+                <p>Available</p>
+                <h2 id="available-equipments">0</h2>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="stat-card orange h-100">
+                <i class="fa-solid fa-plug"></i>
+                <p>Not Available</p>
+                <h2 id="not-available-equipments">0</h2>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="stat-card yellow h-100">
+                <i class="fa-solid fa-building"></i>
+                <p>Total Labs</p>
+                <h2 id="labs-count">0</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-box">
+            <h2>Lab Equipment Usage Across Departments</h2>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Equipment ID</th>
+                    <th>Lab</th>
+                    <th>Equipment Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Available</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adminTable"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-box" id="logs-panel" style="display:none;">
+            <h2>Equipment Logs</h2>
+            <p id="logs-title"></p>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>When</th>
+                    <th>Action</th>
+                    <th>Status</th>
+                    <th>Faculty</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="logs-table-body"></tbody>
+              </table>
+            </div>
+            <div class="manage-actions mt-3">
+              <button class="action-btn secondary" id="logs-close-btn" type="button">Close Logs</button>
+            </div>
+          </div>
         </div>
-
-        <div class="stat-card green">
-          <i class="fa-solid fa-check"></i>
-          <p>Available</p>
-          <h2 id="available-equipments">0</h2>
-        </div>
-
-        <div class="stat-card orange">
-          <i class="fa-solid fa-plug"></i>
-          <p>Not Available</p>
-          <h2 id="not-available-equipments">0</h2>
-        </div>
-
-        <div class="stat-card yellow">
-          <i class="fa-solid fa-building"></i>
-          <p>Total Labs</p>
-          <h2 id="labs-count">0</h2>
-        </div>
-      </div>
-
-      <div class="table-box">
-        <h2>Lab Equipment Usage Across Departments</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Equipment ID</th>
-              <th>Lab</th>
-              <th>Equipment Name</th>
-              <th>Category</th>
-              <th>Quantity</th>
-              <th>Available</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="adminTable"></tbody>
-        </table>
-      </div>
-
-      <div class="table-box" id="logs-panel" style="display:none;">
-        <h2>Equipment Logs</h2>
-        <p id="logs-title"></p>
-        <table>
-          <thead>
-            <tr>
-              <th>When</th>
-              <th>Action</th>
-              <th>Status</th>
-              <th>Faculty</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody id="logs-table-body"></tbody>
-        </table>
-        <div class="manage-actions">
-          <button class="action-btn secondary" id="logs-close-btn" type="button">Close Logs</button>
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
   </div>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="api-base.js"></script>

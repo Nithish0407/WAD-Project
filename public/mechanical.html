@@ -1,34 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prototyping Lab | Equipment</title>
+  <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
 </head>
-<body>
-    <h1> <b> Prototyping Lab </b> </h1>
-    <div id = "EquCount" > <b> EQUIPMENTS </b>
-    <hr>
-    <div id = "boxB"> <button data-page = wood.html> Carpentry Woods </button></div>
-    <hr>
-    <div id = "boxC"> <button data-page = sheet.html> Metal Sheets </button></div>
-    <hr>
-    <div id = "boxD"> <button data-page = wires.html> House Wires, Bulbs, Holders </button></div>
-    <hr>
-    <div id = "boxF"> <button data-page = welding.html> Welding Equipments </button></div>
-    <hr>
+<body class="bg-light">
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+      <h1 class="mb-0">Prototyping Lab</h1>
     </div>
 
-    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.querySelectorAll("#EquCount button").forEach( button => {
-            button.addEventListener("click", () => {
-                window.location.href = button.dataset.page; 
-            });
-        });
-    </script>
+    <div class="row g-3">
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Carpentry Woods</h5>
+            <button class="btn btn-primary w-100" data-page="wood.html">Open</button>
+          </div>
+        </div>
+      </div>
 
-    <link rel = "stylesheet" href = "mechanical.css">
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Metal Sheets</h5>
+            <button class="btn btn-primary w-100" data-page="sheet.html">Open</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">House Wires, Bulbs, Holders</h5>
+            <button class="btn btn-primary w-100" data-page="wires.html">Open</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Welding Equipments</h5>
+            <button class="btn btn-primary w-100" data-page="welding.html">Open</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.querySelectorAll("button[data-page]").forEach(button => {
+      button.addEventListener("click", () => {
+        window.location.href = button.dataset.page;
+      });
+    });
+  </script>
 </body>
 </html>

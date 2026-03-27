@@ -1,48 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Computer Lab | Equipment</title>
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-  <title>Computer Lab</title>
 </head>
-<body>
+<body class="bg-light">
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+      <h2 class="mb-0">Computer Lab Equipment</h2>
+      <button class="btn btn-primary" onclick="loadData()">Check Availability</button>
+    </div>
 
-<h2>Computer Lab Equipment</h2>
-<button onclick="loadData()">Check Availability</button>
-
-<table border="1">
-  <thead>
-    <tr>
-      <th>Equipment</th>
-      <th>Total</th>
-      <th>Available</th>
-    </tr>
-  </thead>
-  <tbody id="tableBody"></tbody>
-</table>
-
-<script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script>
-function loadData() {
-  fetch("http://localhost:5000/lab-equipment/Computer Lab")
-    .then(res => res.json())
-    .then(data => {
-      const table = document.getElementById("tableBody");
-      table.innerHTML = "";
-
-      data.forEach(item => {
-        table.innerHTML += `
+    <div class="table-responsive shadow-sm bg-white rounded">
+      <table class="table table-striped table-hover align-middle mb-0">
+        <thead class="table-light">
           <tr>
-            <td>${item.equipment_name}</td>
-            <td>${item.total}</td>
-            <td>${item.available}</td>
+            <th>Equipment</th>
+            <th>Total</th>
+            <th>Available</th>
           </tr>
-        `;
-      });
-    });
-}
-</script>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="3" class="text-center text-muted">Click “Check Availability”</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function loadData() {
+      fetch("/lab-equipment/Computer Lab")
+        .then(res => res.json())
+        .then(data => {
+          const table = document.getElementById("tableBody");
+          if (!Array.isArray(data) || data.length === 0) {
+            table.innerHTML = '<tr><td colspan="3" class="text-center text-muted">No data found</td></tr>';
+            return;
+          }
+          table.innerHTML = data.map(item => `
+            <tr>
+              <td>${item.equipment_name}</td>
+              <td>${item.total}</td>
+              <td>${item.available}</td>
+            </tr>
+          `).join("");
+        })
+        .catch(() => {
+          document.getElementById("tableBody").innerHTML =
+            '<tr><td colspan="3" class="text-danger text-center">Failed to load data</td></tr>';
+        });
+    }
+  </script>
 </body>
 </html>

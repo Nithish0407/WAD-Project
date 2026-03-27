@@ -21,14 +21,14 @@
             <p class="subtitle">BVRIT Lab Equipment Management System</p>
 
             <form id="loginForm" onsubmit="return false" novalidate>
-              <div class="input-group mb-3">
-                <input type="email" class="form-control" id="email" required>
-                <label>Faculty Email (@bvrit.ac.in)</label>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="name@bvrit.ac.in" required>
+                <label for="email">Faculty Email (@bvrit.ac.in)</label>
               </div>
 
-              <div class="input-group mb-4">
-                <input type="password" class="form-control" id="password" required>
-                <label>Password</label>
+              <div class="form-floating mb-4">
+                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                <label for="password">Password</label>
               </div>
 
               <button id="login-submit" class="btn btn-primary w-100 py-2" type="button" onclick="handleLogin()">Login To Dashboard</button>

@@ -16,7 +16,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px 10px;
+  padding: 12px 8px;
 }
 
 .login-container {
@@ -27,8 +27,8 @@ body {
 }
 
 .auth-card {
-  max-width: 520px;
   width: 100%;
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -43,15 +43,6 @@ h2 {
   font-size: 14px;
   color: #666;
   margin-bottom: 25px;
-}
-
-.input-group {
-  position: relative;
-}
-
-.input-group input {
-  font-size: 15px;
-  padding: 12px 12px 10px;
 }
 
 .brand-wrap {
@@ -78,7 +69,7 @@ h2 {
     width: 68%;
   }
   .main-shell {
-    padding: 16px 10px;
+    padding: 12px 8px;
   }
   .login-container {
     padding: 14px 12px;
@@ -87,10 +78,6 @@ h2 {
   }
   .input-group {
     margin-bottom: 14px;
-  }
-  .input-group input {
-    font-size: 14px;
-    padding: 11px 10px 9px;
   }
   .auth-title {
     font-size: 22px;
@@ -115,55 +102,6 @@ h2 {
   }
 }
 
-.input-group {
-  position: relative;
-  margin-bottom: 20px;
-}
-
-.input-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  outline: none;
-  border-radius: 5px;
-  font-size: 14px;
-}
-
-.input-group label {
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  color: #999;
-  font-size: 13px;
-  pointer-events: none;
-  transform: translateY(-50%);
-  transition: 0.3s;
-  background: #fff;
-  padding: 0 5px;
-}
-
-.input-group input:focus + label,
-.input-group input:valid + label {
-  top: -7px;
-  font-size: 11px;
-  color: #1e3c72;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background: #1e3c72;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  font-size: 15px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #16315c;
-}
-
 .switch {
   text-align: center;
   margin-top: 15px;
@@ -174,10 +112,6 @@ button:hover {
   color: #1e3c72;
   text-decoration: none;
   font-weight: 600;
-}
-
-.login-page .login-container {
-  width: 430px;
 }
 
 .login-info {
@@ -207,4 +141,13 @@ button:hover {
   text-align: center;
   font-size: 13px;
   color: #b42318;
+}
+
+@media (min-width: 768px) {
+  .auth-card {
+    max-width: 520px;
+  }
+  .main-shell {
+    padding: 18px 12px;
+  }
 }

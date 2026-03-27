@@ -22,34 +22,34 @@
 
             <form id="signupForm" onsubmit="return false" novalidate>
 
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" id="facultyId" required>
-                <label>Faculty ID</label>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="facultyId" placeholder="Faculty ID" required>
+                <label for="facultyId">Faculty ID</label>
               </div>
 
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" id="name" required>
-                <label>Faculty Name</label>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Faculty Name" required>
+                <label for="name">Faculty Name</label>
               </div>
 
-              <div class="input-group mb-3">
-                <input type="text" class="form-control" id="department" required>
-                <label>Department</label>
+              <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="department" placeholder="Department" required>
+                <label for="department">Department</label>
               </div>
 
-              <div class="input-group mb-3">
-                <input type="email" class="form-control" id="email" required>
-                <label>Email</label>
+              <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" placeholder="name@bvrit.ac.in" required>
+                <label for="email">Email (@bvrit.ac.in)</label>
               </div>
 
-              <div class="input-group mb-3">
-                <input type="password" class="form-control" id="password" required>
-                <label>Password</label>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" placeholder="Password" required>
+                <label for="password">Password</label>
               </div>
 
-              <div class="input-group mb-4">
-                <input type="password" class="form-control" id="confirmPassword" required>
-                <label>Confirm Password</label>
+              <div class="form-floating mb-4">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                <label for="confirmPassword">Confirm Password</label>
               </div>
 
               <button id="signup-submit" class="btn btn-primary w-100 py-2" type="button">Register</button>

@@ -21,51 +21,70 @@
     </nav>
   </header>
 
-  <main class="content">
-    <h1>Manage Equipment</h1>
-    <p id="manage-page-message"></p>
+  <main class="content container-fluid px-3 px-md-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <h1 class="mb-3">Manage Equipment</h1>
+        <p id="manage-page-message"></p>
 
-    <div class="table-box">
-      <form id="manage-form" class="manage-form">
-        <input type="hidden" id="manage-equipment-row-id">
-        <label>Equipment ID
-          <input id="manage-equipment-id" type="text" readonly>
-        </label>
-        <label>Lab
-          <input id="manage-lab-name" type="text" readonly>
-        </label>
-        <label>Equipment Name
-          <input id="manage-equipment-name" type="text" required>
-        </label>
-        <label>Quantity
-          <input id="manage-quantity" type="number" min="0" required>
-        </label>
-        <label>Available Units
-          <div class="number-stepper">
-            <button class="step-btn" id="available-decrement" type="button">-</button>
-            <input id="manage-available" type="number" min="0" required>
-            <button class="step-btn" id="available-increment" type="button">+</button>
-          </div>
-        </label>
-        <label>Category
-          <select id="manage-category" required>
-            <option value="available">available</option>
-            <option value="maintenance">maintenance</option>
-            <option value="out_of_service">out_of_service</option>
-          </select>
-        </label>
-        <label>Lab Status
-          <select id="manage-lab-status" required>
-            <option value="available">available</option>
-            <option value="not_available">not_available</option>
-          </select>
-        </label>
-        <div class="manage-actions">
-          <button class="action-btn" type="submit">Save Changes</button>
-          <button class="action-btn secondary" id="manage-cancel-btn" type="button">Cancel</button>
+        <div class="table-box">
+          <form id="manage-form" class="row g-3">
+            <input type="hidden" id="manage-equipment-row-id">
+
+            <div class="col-12 col-md-6">
+              <label class="form-label">Equipment ID</label>
+              <input id="manage-equipment-id" type="text" class="form-control" readonly>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label">Lab</label>
+              <input id="manage-lab-name" type="text" class="form-control" readonly>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Equipment Name</label>
+              <input id="manage-equipment-name" type="text" class="form-control" required>
+            </div>
+
+            <div class="col-12 col-sm-6">
+              <label class="form-label">Quantity</label>
+              <input id="manage-quantity" type="number" min="0" class="form-control" required>
+            </div>
+
+            <div class="col-12 col-sm-6">
+              <label class="form-label">Available Units</label>
+              <div class="input-group">
+                <button class="btn btn-outline-secondary" id="available-decrement" type="button">-</button>
+                <input id="manage-available" type="number" min="0" class="form-control text-center" required>
+                <button class="btn btn-outline-secondary" id="available-increment" type="button">+</button>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6">
+              <label class="form-label">Category</label>
+              <select id="manage-category" class="form-select" required>
+                <option value="available">available</option>
+                <option value="maintenance">maintenance</option>
+                <option value="out_of_service">out_of_service</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-sm-6">
+              <label class="form-label">Lab Status</label>
+              <select id="manage-lab-status" class="form-select" required>
+                <option value="available">available</option>
+                <option value="not_available">not_available</option>
+              </select>
+            </div>
+
+            <div class="col-12 d-flex gap-2 flex-wrap">
+              <button class="btn btn-primary" type="submit">Save Changes</button>
+              <button class="btn btn-outline-secondary" id="manage-cancel-btn" type="button">Cancel</button>
+            </div>
+          </form>
+          <p id="manage-message" class="mt-2"></p>
         </div>
-      </form>
-      <p id="manage-message"></p>
+      </div>
     </div>
   </main>
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
