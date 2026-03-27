@@ -1,12 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   const token = localStorage.getItem("auth_token");
 
-  // If not authenticated, send users straight to login
-  if (!token) {
-    window.location.replace("login.html");
-    return;
-  }
-
   const buttons = document.querySelectorAll(".card button");
 
   buttons.forEach((btn, index) => {

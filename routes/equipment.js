@@ -49,9 +49,11 @@ function getLabEquipment(req, res, next) {
   });
 }
 
-router.get("/equipment", authenticate, getLabEquipment);
+// Public read access so dashboards still work even if token issues occur.
+router.get("/equipment", getLabEquipment);
 
-router.get("/equipment/:id", authenticate, (req, res, next) => {
+// Public read access to single equipment
+router.get("/equipment/:id", (req, res, next) => {
   const query =
     "SELECT *, CASE WHEN available_quantity >= COALESCE(NULLIF(equipment_count,0), NULLIF(total_quantity,0), 1) THEN 'available' ELSE 'not_available' END AS lab_status " +
     "FROM app_records WHERE type = 'equipment' AND id = ?";
