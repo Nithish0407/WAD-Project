@@ -43,6 +43,9 @@ const authLimiter = rateLimit({
 
 app.use("/api/auth", authLimiter);
 
+// Always start at the login screen; block direct index load without an explicit token check.
+app.get("/", (req, res) => res.redirect("/login.html"));
+
 app.use(express.static(path.join(__dirname, "public")));
 // Serve Bootstrap assets locally to avoid external CDN dependency
 app.use(

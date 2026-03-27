@@ -36,10 +36,8 @@ function getLabEquipment(req, res, next) {
   where.push("type = 'equipment'");
   const whereClause = where.length ? `WHERE ${where.join(" AND ")}` : "";
   const query =
-    `SELECT id, equipment_id, equipment_name_custom, equipment_count, lab_status, lab_name, equipment_name, status, total_quantity, available_quantity, last_verified_at, verified_by, created_at, updated_at
-     FROM app_records ${whereClause}
-     ORDER BY lab_name, equipment_name
-     LIMIT ? OFFSET ?`;
+    `SELECT id, equipment_id, equipment_name_custom, equipment_count,
+            CASE\n              WHEN available_quantity >= COALESCE(NULLIF(equipment_count,0), NULLIF(total_quantity,0), 1) THEN 'available'\n              ELSE 'not_available'\n            END AS lab_status,\n            lab_name, equipment_name, status, total_quantity, available_quantity, last_verified_at, verified_by, created_at, updated_at\n     FROM app_records ${whereClause}\n     ORDER BY lab_name, equipment_name\n     LIMIT ? OFFSET ?`;
   const countQuery = `SELECT COUNT(*) AS total FROM app_records ${whereClause}`;
 
   db.query(countQuery, params, (countErr, countRows) => {
@@ -54,7 +52,10 @@ function getLabEquipment(req, res, next) {
 router.get("/equipment", authenticate, getLabEquipment);
 
 router.get("/equipment/:id", authenticate, (req, res, next) => {
-  db.query("SELECT * FROM app_records WHERE type = 'equipment' AND id = ?", [req.params.id], (err, rows) => {
+  const query =
+    "SELECT *, CASE WHEN available_quantity >= COALESCE(NULLIF(equipment_count,0), NULLIF(total_quantity,0), 1) THEN 'available' ELSE 'not_available' END AS lab_status " +
+    "FROM app_records WHERE type = 'equipment' AND id = ?";
+  db.query(query, [req.params.id], (err, rows) => {
     if (err) return next(err);
     if (!rows || rows.length === 0) return fail(res, 404, "not found");
     return ok(res, rows[0]);
@@ -62,22 +63,13 @@ router.get("/equipment/:id", authenticate, (req, res, next) => {
 });
 
 router.post("/equipment", authenticate, validateEquipmentPayload, ensureFacultyCanManageLab, (req, res, next) => {
-  const {
-    lab_name,
-    equipment_id,
-    equipment_name,
-    equipment_name_custom,
-    equipment_count,
-    lab_status,
-    status,
-    total_quantity,
-    available_quantity
-  } = req.body;
+  const { lab_name, equipment_id, equipment_name, equipment_name_custom, equipment_count, status, total_quantity, available_quantity } = req.body;
   const resolvedName = equipment_name_custom || equipment_name;
   const resolvedCount = equipment_count !== undefined ? Number(equipment_count) : Number(total_quantity || 1);
-  const resolvedLabStatus = lab_status || "not_available";
   const total = Number(total_quantity || 1);
   const available = available_quantity === undefined ? total : Number(available_quantity);
+  const required = resolvedCount > 0 ? resolvedCount : 1;
+  const resolvedLabStatus = available >= required ? "available" : "not_available";
 
   const query =
     "INSERT INTO app_records (type, equipment_id, equipment_name_custom, equipment_count, lab_status, lab_name, equipment_name, status, total_quantity, available_quantity, last_verified_at, verified_by) VALUES ('equipment', ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
@@ -149,22 +141,13 @@ router.post("/equipment", authenticate, validateEquipmentPayload, ensureFacultyC
 
 router.put("/equipment/:id", authenticate, validateEquipmentPayload, ensureFacultyCanManageLab, (req, res, next) => {
   const { id } = req.params;
-  const {
-    lab_name,
-    equipment_id,
-    equipment_name,
-    equipment_name_custom,
-    equipment_count,
-    lab_status,
-    status,
-    total_quantity,
-    available_quantity
-  } = req.body;
+  const { lab_name, equipment_id, equipment_name, equipment_name_custom, equipment_count, status, total_quantity, available_quantity } = req.body;
   const resolvedName = equipment_name_custom || equipment_name;
   const resolvedCount = equipment_count !== undefined ? Number(equipment_count) : Number(total_quantity || 1);
-  const resolvedLabStatus = lab_status || "not_available";
   const total = Number(total_quantity || 1);
   const available = available_quantity === undefined ? total : Number(available_quantity);
+  const required = resolvedCount > 0 ? resolvedCount : 1;
+  const resolvedLabStatus = available >= required ? "available" : "not_available";
 
   const query =
     "UPDATE app_records SET equipment_id = ?, equipment_name_custom = ?, equipment_count = ?, lab_status = ?, lab_name = ?, equipment_name = ?, status = ?, total_quantity = ?, available_quantity = ?, last_verified_at = NOW(), verified_by = ? WHERE type = 'equipment' AND id = ?";
@@ -249,9 +232,12 @@ router.put("/equipment/:id/availability", authenticate, (req, res, next) => {
       if (permErr) return next(permErr);
       if (!permRows || permRows.length === 0) return fail(res, 403, "No access to manage this lab");
 
-        const update =
-          "UPDATE app_records SET status = ?, available_quantity = ?, last_verified_at = NOW(), verified_by = ? WHERE type = 'equipment' AND id = ?";
-      db.query(update, [status, Number(available_quantity), req.user.id, id], updateErr => {
+      const required = Number(current.equipment_count || current.total_quantity || 1);
+      const availNum = Number(available_quantity);
+      const derivedLabStatus = availNum >= (required > 0 ? required : 1) ? "available" : "not_available";
+      const update =
+        "UPDATE app_records SET status = ?, available_quantity = ?, lab_status = ?, last_verified_at = NOW(), verified_by = ? WHERE type = 'equipment' AND id = ?";
+      db.query(update, [status, Number(available_quantity), derivedLabStatus, req.user.id, id], updateErr => {
         if (updateErr) return next(updateErr);
 
         logAudit({
@@ -262,7 +248,6 @@ router.put("/equipment/:id/availability", authenticate, (req, res, next) => {
           entityId: Number(id),
           details: { status, available_quantity: Number(available_quantity), reason: reason || null }
         });
-        const derivedLabStatus = Number(available_quantity) > 0 && Number(total_quantity) > 0 ? "available" : "not_available";
         syncEquipmentToLabSchema({
           ...current,
           status,

@@ -127,8 +127,14 @@ function updateReservationStatus(targetStatus) {
 
             if (targetStatus === "approved") {
               const updateEquipment =
-                "UPDATE app_records SET available_quantity = available_quantity - ? WHERE type = 'equipment' AND id = ? AND available_quantity >= ?";
-              db.query(updateEquipment, [reservation.quantity, reservation.equipment_id, reservation.quantity], (eqErr, eqRes) => {
+                "UPDATE app_records " +
+                "SET available_quantity = available_quantity - ?, " +
+                "    lab_status = CASE " +
+                "      WHEN (available_quantity - ?) >= COALESCE(NULLIF(total_quantity,0), 1) THEN 'available' " +
+                "      ELSE 'not_available' " +
+                "    END " +
+                "WHERE type = 'equipment' AND id = ? AND available_quantity >= ?";
+              db.query(updateEquipment, [reservation.quantity, reservation.quantity, reservation.equipment_id, reservation.quantity], (eqErr, eqRes) => {
                 if (eqErr) return db.rollback(() => next(eqErr));
                 if (!eqRes || eqRes.affectedRows === 0) {
                   return db.rollback(() => fail(res, 400, "Insufficient available quantity"));

@@ -61,8 +61,8 @@ router.get("/admin/dashboard", authenticate, (req, res, next) => {
 
     const placeholders = labs.map(() => "?").join(", ");
     const equipmentQuery =
-      `SELECT id, equipment_id, equipment_name_custom, equipment_name, equipment_count, lab_status, lab_name, status,
-              total_quantity, available_quantity, updated_at
+      `SELECT id, equipment_id, equipment_name_custom, equipment_name, equipment_count,
+              CASE\n                WHEN available_quantity >= COALESCE(NULLIF(equipment_count,0), NULLIF(total_quantity,0), 1) THEN 'available'\n                ELSE 'not_available'\n              END AS lab_status,\n              lab_name, status, total_quantity, available_quantity, updated_at
        FROM app_records
        WHERE type = 'equipment' AND lab_name IN (${placeholders})
        ORDER BY updated_at DESC
