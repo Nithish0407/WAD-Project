@@ -122,7 +122,7 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 28px;
   margin-bottom: 30px;
   max-width: 100%;
@@ -130,16 +130,20 @@
 
 .stat-card {
   background: white;
-  padding: 32px 38px;
+  padding: 32px 42px;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
   min-height: 180px;
   width: 100%;
-  max-width: 520px;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+}
+
+.stat-card p {
+  white-space: nowrap;
 }
 
 .stat-card i {
@@ -311,7 +315,7 @@ tbody tr {
 
 @media (max-width: 1100px) {
   .stats {
-    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    grid-template-columns: repeat(2, minmax(280px, 1fr));
   }
   .manage-form {
     grid-template-columns: repeat(2, minmax(160px, 1fr));
@@ -365,7 +369,7 @@ tbody tr {
     padding: 14px 12px 18px;
   }
   .stats {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
   }
   .table-box {
@@ -411,7 +415,7 @@ tbody tr {
     min-height: 180px;
   }
   .stats {
-    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    grid-template-columns: repeat(2, minmax(170px, 1fr));
     gap: 10px;
   }
   .content {
