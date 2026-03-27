@@ -116,13 +116,10 @@
       }
     }
 
-    // If already logged in, go straight to admin — but only when both localStorage and cookie are present
+    // Always show the login form; clear stale tokens if cookie is missing
     const storedToken = localStorage.getItem("auth_token");
     const cookieToken = getCookie("auth_token");
-    if (storedToken && cookieToken) {
-      window.location.replace("/admin.html");
-    } else if (storedToken && !cookieToken) {
-      // Clear stale token to avoid redirect loops when cookie expired/blocked
+    if (storedToken && !cookieToken) {
       localStorage.removeItem("auth_token");
       localStorage.removeItem("user_email");
     }

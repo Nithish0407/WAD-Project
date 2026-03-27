@@ -55,10 +55,9 @@ function getCookie(req, name) {
   return match ? decodeURIComponent(match.split("=")[1]) : null;
 }
 
-// Default entry: show the public homepage; login is available at /login.html
-app.get("/", (req, res) => res.redirect("/index.html"));
+// Default entry: force login page; homepage only when explicitly requested
+app.get("/", (req, res) => res.redirect("/login.html"));
 
-// Allow direct access to homepage when explicitly requested
 app.get("/index.html", (req, res, next) => next());
 
 // Gate protected HTML pages (currently admin dashboard)
