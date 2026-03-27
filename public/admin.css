@@ -54,6 +54,20 @@
   cursor: pointer;
 }
 
+.back-btn {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #0f4c81;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.top-actions {
+  margin-left: auto;
+}
+
 .layout {
   min-height: calc(100vh - 60px);
   padding-top: 70px;
@@ -118,19 +132,20 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
   margin-bottom: 30px;
   max-width: 100%;
 }
 
 .stat-card {
   background: white;
-  padding: 28px 32px;
+  padding: 32px 38px;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
   min-height: 180px;
   width: 100%;
+  max-width: 520px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -306,7 +321,7 @@ tbody tr {
 
 @media (max-width: 1100px) {
   .stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
   }
   .manage-form {
     grid-template-columns: repeat(2, minmax(160px, 1fr));
@@ -318,17 +333,33 @@ tbody tr {
 
 @media (max-width: 768px) {
   .topbar {
-    padding: 8px 12px;
-    min-height: 54px;
-    flex-wrap: wrap;
-    gap: 8px;
+    padding: 10px 14px;
+    min-height: 64px;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+  .topbar .logo span {
+    font-size: 14px;
   }
   .topbar nav {
-    width: 100%;
+    margin-left: auto;
+    width: auto;
     display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 10px;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
     align-items: center;
+  }
+  .topbar nav .welcome {
+    font-size: 14px;
+    white-space: nowrap;
+    display: none;
+  }
+  .logout-btn {
+    padding: 6px 12px;
+  }
+  .back-btn {
+    padding: 6px 10px;
   }
   .layout {
   }
@@ -393,7 +424,7 @@ tbody tr {
     min-height: 180px;
   }
   .stats {
-    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
     gap: 10px;
   }
   .content {

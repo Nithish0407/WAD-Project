@@ -43,8 +43,8 @@ const authLimiter = rateLimit({
 
 app.use("/api/auth", authLimiter);
 
-// Default entry: send visitors to login first
-app.get("/", (req, res) => res.redirect("/login.html"));
+// Default entry: show the public homepage; login is available at /login.html
+app.get("/", (req, res) => res.redirect("/index.html"));
 
 // Allow direct access to homepage when explicitly requested
 app.get("/index.html", (req, res, next) => next());

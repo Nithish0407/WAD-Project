@@ -20,6 +20,7 @@ const notAvailableEquipmentsEl = document.getElementById("not-available-equipmen
 const labsCountEl = document.getElementById("labs-count");
 const adminTable = document.getElementById("adminTable");
 const logoutBtn = document.getElementById("logout-btn");
+const backBtn = document.getElementById("back-btn");
 const topLinks = document.querySelectorAll(".top-link");
 const sideLinks = document.querySelectorAll(".side-link");
 const utilityPanel = document.getElementById("utility-panel");
@@ -416,6 +417,17 @@ logoutBtn.addEventListener("click", () => {
   localStorage.removeItem("managed_lab");
   window.location.replace("/login.html");
 });
+
+if (backBtn) {
+  backBtn.addEventListener("click", () => {
+    // Go back if possible, otherwise take user to public homepage
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = "/index.html";
+    }
+  });
+}
 
 loadAdminSession().catch(err => {
   console.error("Dashboard load error:", err);
