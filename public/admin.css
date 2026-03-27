@@ -116,6 +116,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  overflow-x: auto;
 }
 
 .table-header {
@@ -308,6 +309,9 @@ tbody tr {
   .table-box {
     padding: 14px;
   }
+  table {
+    min-width: 640px;
+  }
   .table-header {
     flex-direction: column;
     align-items: flex-start;
@@ -324,10 +328,37 @@ tbody tr {
   .manage-form {
     grid-template-columns: 1fr;
   }
+  .manage-form label {
+    font-size: 12px;
+  }
+  .manage-form input,
+  .manage-form select {
+    font-size: 13px;
+  }
   .manage-actions {
     flex-wrap: wrap;
   }
   .utility-panel .panel-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .topbar nav a {
+    margin-right: 10px;
+    font-size: 13px;
+  }
+  .stat-card {
+    padding: 14px;
+  }
+  .stat-card h3 {
+    font-size: 18px;
+  }
+  .stat-card i {
+    font-size: 22px;
+  }
+  .session-meta,
+  #admin-message {
+    font-size: 14px;
   }
 }
