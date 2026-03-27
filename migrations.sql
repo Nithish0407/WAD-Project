@@ -6,6 +6,10 @@ DROP TABLE IF EXISTS faculty_labs;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS faculty_users;
 
+CREATE DATABASE IF NOT EXISTS `bdgfndssjryalvrnsdmo`
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `bdgfndssjryalvrnsdmo`;
+
 CREATE TABLE IF NOT EXISTS app_records (
   id INT AUTO_INCREMENT PRIMARY KEY,
   type ENUM('user','lab_map','equipment','reservation','audit') NOT NULL,
