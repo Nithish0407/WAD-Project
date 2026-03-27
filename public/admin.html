@@ -9,11 +9,10 @@
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script>
-    // Always force fresh login before accessing admin
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("user_email");
-    localStorage.removeItem("managed_lab");
-    window.location.replace("/login.html");
+    // Guard: allow only if a token is present, otherwise go to login
+    if (!localStorage.getItem("auth_token")) {
+      window.location.replace("/login.html");
+    }
   </script>
 </head>
 <body class="container-fluid p-0">

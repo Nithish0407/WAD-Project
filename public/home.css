@@ -129,7 +129,11 @@
   background: #ffffff;
   border: 1px solid #dfe8f4;
   border-radius: 8px;
-  padding: 12px;
+  padding: 22px 18px;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .stat-card p {
@@ -139,8 +143,8 @@
 
 .stat-card h3 {
   color: #113a63;
-  margin-top: 6px;
-  font-size: 24px;
+  margin-top: 8px;
+  font-size: 26px;
 }
 
 .equipment-form-wrap {
@@ -250,7 +254,8 @@
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    gap: 14px;
   }
 
   .equipment-form .form-grid {
