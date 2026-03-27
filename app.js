@@ -43,6 +43,12 @@ const authLimiter = rateLimit({
 
 app.use("/api/auth", authLimiter);
 
+// Default entry: send visitors to login first
+app.get("/", (req, res) => res.redirect("/login.html"));
+
+// Allow direct access to homepage when explicitly requested
+app.get("/index.html", (req, res, next) => next());
+
 app.use(express.static(path.join(__dirname, "public")));
 // Serve Bootstrap assets locally to avoid external CDN dependency
 app.use(
