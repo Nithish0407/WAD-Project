@@ -16,7 +16,10 @@
       <span>BVRIT LabTrack</span>
     </div>
 
-    <nav>
+    <nav class="d-flex align-items-center gap-2">
+      <button class="btn btn-outline-light btn-sm d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="true" aria-label="Toggle navigation">
+        ☰
+      </button>
       <span class="welcome">Welcome, <span id="admin-name">Faculty</span></span>
       <button class="logout-btn" id="logout-btn">Logout</button>
     </nav>
@@ -24,14 +27,14 @@
 
   <div class="layout container-fluid px-0">
     <div class="row gx-0">
-      <aside class="sidebar col-12 col-lg-2">
+      <aside class="sidebar col-12 col-md-3 col-lg-2 collapse show" id="sidebarMenu">
         <a class="side-link active" data-view="dashboard" href="#"><i class="fa-solid fa-house"></i> Dashboard</a>
         <a class="side-link" data-view="equipment-manage" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Manage Equipment</a>
         <a class="side-link" data-view="equipment-logs" href="#"><i class="fa-solid fa-clock-rotate-left"></i> Equipment Logs</a>
         <a class="side-link" data-view="users" href="#"><i class="fa-solid fa-users"></i> Manage Users</a>
       </aside>
 
-      <main class="content col-12 col-lg-10">
+      <main class="content col-12 col-md-9 col-lg-10">
         <div class="container-fluid px-0">
           <h1>Dashboard</h1>
           <p id="admin-message"></p>

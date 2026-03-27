@@ -42,15 +42,14 @@
 }
 
 .layout {
-  display: flex;
   min-height: calc(100vh - 60px);
 }
 
 .sidebar {
-  width: 230px;
   background: #1e4f91;
   color: white;
   padding: 20px;
+  min-height: 100%;
 }
 
 .sidebar a {
@@ -71,8 +70,7 @@
 .content {
   flex: 1;
   padding: 30px;
-  max-width: 1100px;
-  margin: 0 auto;
+  margin: 0;
   background: #f5f7fb;
 }
 
@@ -299,27 +297,20 @@ tbody tr {
     align-items: center;
   }
   .layout {
-    flex-direction: column;
   }
   .sidebar {
     width: 100%;
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
     padding: 8px 6px;
     background: #0f4c81;
   }
   .sidebar a {
-    flex: 1 0 110px;
-    text-align: center;
-    padding: 8px 10px;
+    display: block;
+    padding: 10px 8px;
     border-radius: 6px;
     font-size: 14px;
   }
   .content {
     padding: 14px 12px 18px;
-    margin: 0;
-    max-width: none;
   }
   .stats {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
