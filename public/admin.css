@@ -54,16 +54,6 @@
   cursor: pointer;
 }
 
-.back-btn {
-  border: 1px solid #e5e7eb;
-  background: #ffffff;
-  color: #0f4c81;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
 .top-actions {
   margin-left: auto;
 }
@@ -357,9 +347,6 @@ tbody tr {
   }
   .logout-btn {
     padding: 6px 12px;
-  }
-  .back-btn {
-    padding: 6px 10px;
   }
   .layout {
   }

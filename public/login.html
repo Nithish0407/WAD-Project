@@ -96,6 +96,7 @@
 
         localStorage.setItem("auth_token", payload.data.token);
         localStorage.setItem("user_email", email);
+        document.cookie = `auth_token=${payload.data.token}; Max-Age=86400; Path=/; SameSite=Lax`;
         setMessage("Login successful. Redirecting...", "#067647");
         window.location.replace("/admin.html");
       } catch (err) {

@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
+const jwt = require("jsonwebtoken");
 
 dotenv.config();
 const db = require("./db");
@@ -43,11 +44,34 @@ const authLimiter = rateLimit({
 
 app.use("/api/auth", authLimiter);
 
+// Cookie helper for lightweight auth gate on HTML routes
+function getCookie(req, name) {
+  const raw = req.headers.cookie;
+  if (!raw) return null;
+  const match = raw
+    .split(";")
+    .map(c => c.trim())
+    .find(c => c.startsWith(`${name}=`));
+  return match ? decodeURIComponent(match.split("=")[1]) : null;
+}
+
 // Default entry: show the public homepage; login is available at /login.html
 app.get("/", (req, res) => res.redirect("/index.html"));
 
 // Allow direct access to homepage when explicitly requested
 app.get("/index.html", (req, res, next) => next());
+
+// Protect admin shell: require a valid JWT in auth_token cookie, otherwise send to login
+app.get("/admin.html", (req, res) => {
+  const token = getCookie(req, "auth_token");
+  if (!token) return res.redirect("/login.html");
+  try {
+    jwt.verify(token, process.env.JWT_SECRET);
+    return res.sendFile(path.join(__dirname, "public", "admin.html"));
+  } catch (err) {
+    return res.redirect("/login.html");
+  }
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 // Serve Bootstrap assets locally to avoid external CDN dependency

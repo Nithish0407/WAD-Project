@@ -38,6 +38,7 @@ submitBtn.addEventListener("click", async () => {
 
     localStorage.setItem("auth_token", payload.data.token);
     localStorage.setItem("user_email", email);
+    document.cookie = `auth_token=${payload.data.token}; Max-Age=86400; Path=/; SameSite=Lax`;
     messageEl.style.color = "#067647";
     messageEl.textContent = "Login successful. Redirecting...";
     window.location.replace("/admin.html");
