@@ -61,13 +61,18 @@ app.get("/", (req, res) => res.redirect("/index.html"));
 // Allow direct access to homepage when explicitly requested
 app.get("/index.html", (req, res, next) => next());
 
-// Protect admin shell: require a valid JWT in auth_token cookie, otherwise send to login
-app.get("/admin.html", (req, res) => {
+// Gate protected HTML pages (currently admin dashboard)
+const PROTECTED_HTML = new Set(["/admin.html"]);
+app.use((req, res, next) => {
+  const pathLower = req.path.toLowerCase();
+  if (!PROTECTED_HTML.has(pathLower)) return next();
+
   const token = getCookie(req, "auth_token");
   if (!token) return res.redirect("/login.html");
+
   try {
     jwt.verify(token, process.env.JWT_SECRET);
-    return res.sendFile(path.join(__dirname, "public", "admin.html"));
+    return next();
   } catch (err) {
     return res.redirect("/login.html");
   }

@@ -9,8 +9,19 @@
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script>
-    // Guard: allow only if a token is present, otherwise go to login
-    if (!localStorage.getItem("auth_token")) {
+    function getCookie(name) {
+      const match = document.cookie
+        .split(";")
+        .map(c => c.trim())
+        .find(c => c.startsWith(name + "="));
+      return match ? decodeURIComponent(match.split("=")[1]) : null;
+    }
+    const tokenLS = localStorage.getItem("auth_token");
+    const tokenCookie = getCookie("auth_token");
+    if (!tokenLS || !tokenCookie) {
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("user_email");
+      localStorage.removeItem("managed_lab");
       window.location.replace("/login.html");
     }
   </script>
