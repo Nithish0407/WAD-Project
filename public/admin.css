@@ -133,6 +133,7 @@
 
 table {
   width: 100%;
+  min-width: 620px;
   border-collapse: collapse;
   margin-top: 15px;
 }
@@ -140,10 +141,14 @@ table {
 th, td {
   padding: 12px;
   text-align: left;
+  white-space: nowrap;
 }
 
 thead {
   background: #eef3fb;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 tbody tr {
@@ -275,14 +280,15 @@ tbody tr {
 
 @media (max-width: 768px) {
   .topbar {
-    padding: 0 16px;
+    padding: 8px 12px;
+    min-height: 54px;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
   }
   .topbar nav {
     width: 100%;
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: wrap;
     align-items: center;
   }
@@ -292,25 +298,30 @@ tbody tr {
   .sidebar {
     width: 100%;
     display: flex;
-    gap: 8px;
+    gap: 6px;
     overflow-x: auto;
-    padding: 12px;
+    padding: 8px 6px;
+    background: #0f4c81;
   }
   .sidebar a {
-    flex: 1 0 120px;
+    flex: 1 0 110px;
     text-align: center;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 14px;
   }
   .content {
-    padding: 16px;
+    padding: 14px 12px 18px;
   }
   .stats {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
   }
   .table-box {
-    padding: 14px;
+    padding: 12px;
   }
   table {
-    min-width: 640px;
+    min-width: 560px;
   }
   .table-header {
     flex-direction: column;
@@ -366,10 +377,10 @@ tbody tr {
     padding: 12px;
   }
   table {
-    min-width: 520px;
+    min-width: 440px;
   }
   th, td {
-    padding: 10px;
-    font-size: 13px;
+    padding: 8px;
+    font-size: 12px;
   }
 }
