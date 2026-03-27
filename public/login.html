@@ -58,6 +58,14 @@
       if (color) messageEl.style.color = color;
     }
 
+    function getCookie(name) {
+      const match = document.cookie
+        .split(";")
+        .map(c => c.trim())
+        .find(c => c.startsWith(`${name}=`));
+      return match ? decodeURIComponent(match.split("=")[1]) : null;
+    }
+
     // Indicate that JS is loaded
     setMessage("Ready to login", "#555");
 
@@ -108,9 +116,15 @@
       }
     }
 
-    // If already logged in, go straight to admin
-    if (localStorage.getItem("auth_token")) {
+    // If already logged in, go straight to admin — but only when both localStorage and cookie are present
+    const storedToken = localStorage.getItem("auth_token");
+    const cookieToken = getCookie("auth_token");
+    if (storedToken && cookieToken) {
       window.location.replace("/admin.html");
+    } else if (storedToken && !cookieToken) {
+      // Clear stale token to avoid redirect loops when cookie expired/blocked
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("user_email");
     }
 
     // Attach handlers
