@@ -2,56 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Faculty Signup</title>
   <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.png" type="image/png">
 </head>
 <body>
+  <div class="main-shell">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-11 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+          <div class="login-container shadow-lg border-0 rounded-3 p-4 p-md-5">
+            <div class="brand-wrap">
+              <img src="logo.png" alt="Lab Equipment Tracker logo" class="img-fluid brand-logo">
+            </div>
+            <h2 class="text-center">Faculty Registration</h2>
+            <p class="subtitle">Lab Equipment Management System</p>
 
-  <div class="container">
-    <h2>Faculty Registration</h2>
-    <p class="subtitle">Lab Equipment Management System</p>
+            <form id="signupForm" onsubmit="return false" novalidate>
 
-    <form id="signupForm" onsubmit="return false" novalidate>
+              <div class="input-group">
+                <input type="text" id="facultyId" required>
+                <label>Faculty ID</label>
+              </div>
 
-      <div class="input-group">
-        <input type="text" id="facultyId" required>
-        <label>Faculty ID</label>
+              <div class="input-group">
+                <input type="text" id="name" required>
+                <label>Faculty Name</label>
+              </div>
+
+              <div class="input-group">
+                <input type="text" id="department" required>
+                <label>Department</label>
+              </div>
+
+              <div class="input-group">
+                <input type="email" id="email" required>
+                <label>Email</label>
+              </div>
+
+              <div class="input-group">
+                <input type="password" id="password" required>
+                <label>Password</label>
+              </div>
+
+              <div class="input-group">
+                <input type="password" id="confirmPassword" required>
+                <label>Confirm Password</label>
+              </div>
+
+              <button id="signup-submit" class="btn btn-primary w-100 py-2" type="button">Register</button>
+
+              <p class="switch text-center">
+                Already registered? <a href="login.html">Login</a>
+              </p>
+
+            </form>
+          </div>
+        </div>
       </div>
-
-      <div class="input-group">
-        <input type="text" id="name" required>
-        <label>Faculty Name</label>
-      </div>
-
-      <div class="input-group">
-        <input type="text" id="department" required>
-        <label>Department</label>
-      </div>
-
-      <div class="input-group">
-        <input type="email" id="email" required>
-        <label>Email</label>
-      </div>
-
-      <div class="input-group">
-        <input type="password" id="password" required>
-        <label>Password</label>
-      </div>
-
-      <div class="input-group">
-        <input type="password" id="confirmPassword" required>
-        <label>Confirm Password</label>
-      </div>
-
-      <button id="signup-submit" type="button">Register</button>
-
-      <p class="switch">
-        Already registered? <a href="login.html">Login</a>
-      </p>
-
-    </form>
+    </div>
   </div>
 
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>

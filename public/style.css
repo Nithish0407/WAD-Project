@@ -7,17 +7,22 @@ body {
   margin: 0;
   min-height: 100vh;
   background: linear-gradient(135deg, #1e3c72, #2a5298);
+  padding: 0;
+}
+
+.main-shell {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px 12px;
 }
 
-.container {
+.login-container {
   background: #ffffff;
-  padding: 30px;
-  width: 360px;
-  border-radius: 10px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.18);
 }
 
 h2 {
@@ -31,6 +36,27 @@ h2 {
   font-size: 14px;
   color: #666;
   margin-bottom: 25px;
+}
+
+.brand-wrap {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.brand-logo {
+  max-width: 180px;
+  width: 60%;
+  height: auto;
+}
+
+@media (max-width: 480px) {
+  .brand-logo {
+    max-width: 150px;
+    width: 70%;
+  }
+  .main-shell {
+    padding: 16px 10px;
+  }
 }
 
 .input-group {
