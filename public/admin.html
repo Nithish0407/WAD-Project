@@ -9,10 +9,11 @@
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script>
-    // Early guard: if not authenticated, send to login before rendering.
-    if (!localStorage.getItem("auth_token")) {
-      window.location.replace("/login.html");
-    }
+    // Always force fresh login before accessing admin
+    localStorage.removeItem("auth_token");
+    localStorage.removeItem("user_email");
+    localStorage.removeItem("managed_lab");
+    window.location.replace("/login.html");
   </script>
 </head>
 <body class="container-fluid p-0">
@@ -23,7 +24,7 @@
     </div>
 
     <nav class="d-flex align-items-center gap-2">
-      <button class="btn btn-outline-light btn-sm d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-label="Toggle navigation">
+      <button class="btn btn-outline-light btn-sm d-none" type="button" aria-label="Toggle navigation">
         ☰
       </button>
       <span class="welcome">Welcome, <span id="admin-name">Faculty</span></span>
@@ -31,31 +32,16 @@
     </nav>
   </header>
 
-  <div class="offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasNavLabel">Menu</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body p-0">
-      <nav class="mobile-nav">
-        <a class="side-link active" data-view="dashboard" href="#"><i class="fa-solid fa-house"></i> Dashboard</a>
-        <a class="side-link" data-view="equipment-manage" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Manage Equipment</a>
-        <a class="side-link" data-view="equipment-logs" href="#"><i class="fa-solid fa-clock-rotate-left"></i> Equipment Logs</a>
-        <a class="side-link" data-view="users" href="#"><i class="fa-solid fa-users"></i> Manage Users</a>
-      </nav>
-    </div>
-  </div>
-
   <div class="layout container-fluid px-0">
     <div class="row gx-0">
-      <aside class="sidebar d-none d-lg-block col-lg-2">
+      <aside class="sidebar col-12 col-md-3 col-lg-2">
         <a class="side-link active" data-view="dashboard" href="#"><i class="fa-solid fa-house"></i> Dashboard</a>
         <a class="side-link" data-view="equipment-manage" href="#"><i class="fa-solid fa-screwdriver-wrench"></i> Manage Equipment</a>
         <a class="side-link" data-view="equipment-logs" href="#"><i class="fa-solid fa-clock-rotate-left"></i> Equipment Logs</a>
         <a class="side-link" data-view="users" href="#"><i class="fa-solid fa-users"></i> Manage Users</a>
       </aside>
 
-      <main class="content col-12 col-lg-10">
+      <main class="content col-12 col-md-9 col-lg-10">
         <div class="container-fluid px-0">
           <h1>Dashboard</h1>
           <p id="admin-message"></p>

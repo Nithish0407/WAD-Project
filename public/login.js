@@ -3,10 +3,6 @@ const messageEl = document.getElementById("login-message");
 const submitBtn = document.getElementById("login-submit");
 const form = document.getElementById("loginForm");
 
-if (localStorage.getItem("auth_token")) {
-  window.location.replace("/admin.html");
-}
-
 submitBtn.addEventListener("click", async () => {
 
   const email = document.getElementById("email").value.trim();

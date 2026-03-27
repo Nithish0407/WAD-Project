@@ -376,13 +376,16 @@ tbody tr {
 }
 
 @media (max-width: 540px) {
-  .topbar nav a {
-    margin-right: 10px;
-    font-size: 13px;
-  }
   .stat-card {
     padding: 18px;
     min-height: 150px;
+  }
+  .stats {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  .content {
+    padding: 14px 12px 18px;
   }
   .stat-card h3 {
     font-size: 18px;
