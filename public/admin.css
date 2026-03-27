@@ -361,4 +361,15 @@ tbody tr {
   #admin-message {
     font-size: 14px;
   }
+
+  .table-box {
+    padding: 12px;
+  }
+  table {
+    min-width: 520px;
+  }
+  th, td {
+    padding: 10px;
+    font-size: 13px;
+  }
 }
