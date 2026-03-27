@@ -5,10 +5,6 @@ function bootstrapLabPage() {
 
   const API_BASE = window.API_BASE || window.location.origin;
   const token = localStorage.getItem("auth_token");
-  if (!token) {
-    window.location.href = "login.html";
-    return;
-  }
 
   const params = new URLSearchParams(window.location.search);
   let lab = (params.get("lab") || "").trim();
@@ -122,11 +118,9 @@ function bootstrapLabPage() {
 
     try {
     const qs = lab ? `?lab=${encodeURIComponent(lab)}` : "";
-    const response = await fetch(`${API_BASE}/api/equipment${qs}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+    const headers = {};
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const response = await fetch(`${API_BASE}/api/equipment${qs}`, { headers });
       const text = await response.text();
       let payload;
       try {
