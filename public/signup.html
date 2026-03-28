@@ -33,7 +33,15 @@
               </div>
 
               <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="department" placeholder="Department" required>
+                <select class="form-control" id="department" required>
+                  <option value="" disabled selected>Select Department</option>
+                  <option value="CSE">CSE</option>
+                  <option value="Chemical">Chemical</option>
+                  <option value="Mechanical">Mechanical</option>
+                  <option value="ECE">ECE</option>
+                  <option value="EEE">EEE</option>
+                  <option value="Civil">Civil</option>
+                </select>
                 <label for="department">Department</label>
               </div>
 
@@ -73,6 +81,26 @@
       const submitBtn = document.getElementById("signup-submit");
       const form = document.getElementById("signupForm");
 
+      function hasSpaces(str) {
+        return /\s/.test(str);
+      }
+
+      function passwordMeetsRules(pwd) {
+        const hasMin = pwd.length >= 5;
+        const hasUpper = /[A-Z]/.test(pwd);
+        const hasLower = /[a-z]/.test(pwd);
+        const hasNumber = /[0-9]/.test(pwd);
+        const hasSpecial = /[!@#$%^&*]/.test(pwd);
+        return hasMin && hasUpper && hasLower && hasNumber && hasSpecial;
+      }
+
+      function usernameMeetsRules(name) {
+        const hasMin = name.length >= 5;
+        const allowedChars = /^[A-Za-z0-9._-]+$/.test(name);
+        const startsWithLetter = /^[A-Za-z]/.test(name);
+        return hasMin && allowedChars && startsWithLetter;
+      }
+
       async function handleSignup() {
         const facultyId = document.getElementById("facultyId").value.trim();
         const name = document.getElementById("name").value.trim();
@@ -81,8 +109,26 @@
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirmPassword").value;
 
+        // Department comes from dropdown; ensure selection
+        if (!department) {
+          alert("Please select a department.");
+          return;
+        }
+
         if (!facultyId || !name || !department || !email || !password || !confirmPassword) {
           alert("All fields are required");
+          return;
+        }
+        if ([facultyId, name, department, email, password, confirmPassword].some(hasSpaces)) {
+          alert("Spaces are not allowed in any field.");
+          return;
+        }
+        if (!usernameMeetsRules(facultyId)) {
+          alert("Faculty ID must start with a letter, be ≥5 characters, and only use letters, numbers, . _ -");
+          return;
+        }
+        if (!passwordMeetsRules(password)) {
+          alert("Password must be ≥5 chars and include uppercase, lowercase, number, and special (!@#$%^&*).");
           return;
         }
         if (password !== confirmPassword) {
