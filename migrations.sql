@@ -1,56 +1,51 @@
--- Single-table schema to keep all entities together for simpler queries and deployment
-DROP TABLE IF EXISTS audit_logs;
-DROP TABLE IF EXISTS reservations;
-DROP TABLE IF EXISTS equipment;
-DROP TABLE IF EXISTS faculty_labs;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS faculty_users;
+-- Migration for LabTrack: single-table schema for all entities.
+-- Idempotent: safe to run multiple times.
 
-CREATE DATABASE IF NOT EXISTS `bdgfndssjryalvrnsdmo`
-  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `bdgfndssjryalvrnsdmo`;
+-- Ensure the target database exists. If your DB_NAME differs, adjust or create it manually.
+-- CREATE DATABASE IF NOT EXISTS `bdgfndssjryalvrnsdmo` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- USE `bdgfndssjryalvrnsdmo`;
 
 CREATE TABLE IF NOT EXISTS app_records (
   id INT AUTO_INCREMENT PRIMARY KEY,
   type ENUM('user','lab_map','equipment','reservation','audit') NOT NULL,
 
   -- user fields
-  name VARCHAR(150) NULL,
-  faculty_id VARCHAR(50) NULL,
-  department VARCHAR(100) NULL,
-  email VARCHAR(150) NULL,
-  password_hash VARCHAR(255) NULL,
+  name VARCHAR(150),
+  faculty_id VARCHAR(50),
+  department VARCHAR(100),
+  email VARCHAR(150),
+  password_hash VARCHAR(255),
   user_status ENUM('active','inactive') DEFAULT 'active',
 
   -- lab mapping
-  lab_name VARCHAR(100) NULL,
+  lab_name VARCHAR(100),
 
   -- equipment fields
-  equipment_id VARCHAR(50) NULL,
-  equipment_name VARCHAR(150) NULL,
-  equipment_name_custom VARCHAR(150) NULL,
-  equipment_count INT NULL,
+  equipment_id VARCHAR(50),
+  equipment_name VARCHAR(150),
+  equipment_name_custom VARCHAR(150),
+  equipment_count INT,
   lab_status ENUM('available','not_available') DEFAULT 'not_available',
-  status VARCHAR(30) NULL,
-  total_quantity INT NULL,
-  available_quantity INT NULL,
-  last_verified_at DATETIME NULL,
-  verified_by INT NULL,
+  status VARCHAR(30),
+  total_quantity INT,
+  available_quantity INT,
+  last_verified_at DATETIME,
+  verified_by INT,
 
   -- reservation fields
-  ref_user_id INT NULL,
-  ref_equipment_id INT NULL,
-  res_quantity INT NULL,
-  start_at DATETIME NULL,
-  end_at DATETIME NULL,
+  ref_user_id INT,
+  ref_equipment_id INT,
+  res_quantity INT,
+  start_at DATETIME,
+  end_at DATETIME,
 
   -- audit fields
-  actor_user_id INT NULL,
-  actor_faculty_id VARCHAR(50) NULL,
-  action VARCHAR(120) NULL,
-  entity_type VARCHAR(80) NULL,
-  entity_id INT NULL,
-  details JSON NULL,
+  actor_user_id INT,
+  actor_faculty_id VARCHAR(50),
+  action VARCHAR(120),
+  entity_type VARCHAR(80),
+  entity_id INT,
+  details JSON,
 
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -64,24 +59,3 @@ CREATE TABLE IF NOT EXISTS app_records (
   KEY idx_res_user (type, ref_user_id),
   KEY idx_res_equipment (type, ref_equipment_id)
 );
-
--- View: faculty activity (registration and last login)
-DROP VIEW IF EXISTS faculty_activity;
-CREATE VIEW faculty_activity AS
-SELECT
-  u.id,
-  u.name,
-  u.faculty_id,
-  u.department,
-  u.email,
-  u.status AS user_status,
-  (SELECT MIN(a.created_at)
-     FROM audit_logs a
-    WHERE a.entity_type = 'user'
-      AND a.entity_id = u.id
-      AND a.action = 'auth.register') AS registered_at,
-  (SELECT MAX(a.created_at)
-     FROM audit_logs a
-    WHERE a.actor_user_id = u.id
-      AND a.action = 'auth.login') AS last_login_at
-FROM users u;
