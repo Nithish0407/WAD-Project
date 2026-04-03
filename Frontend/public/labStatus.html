@@ -40,14 +40,15 @@
   </div>
 
   <script>
-    fetch("/lab-status")
+    const API = "https://wad-project-l6pk.onrender.com";
+    fetch(`${API}/lab-status`)
       .then(res => res.json())
       .then(data => {
         document.getElementById("students").innerText =
-          "Required Students: " + data.requiredStudents;
+          "Required Students: " + (data.requiredStudents ?? "N/A");
 
         document.getElementById("status").innerText =
-          data.status;
+          data.status || "unknown";
       })
       .catch(err => {
         document.getElementById("status").innerText =

@@ -31,8 +31,9 @@
 
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
+    const API = "https://wad-project-l6pk.onrender.com";
     function loadData() {
-      fetch("/lab-equipment/Computer Lab")
+      fetch(`${API}/lab-equipment/Computer Lab`)
         .then(res => res.json())
         .then(data => {
           const table = document.getElementById("tableBody");

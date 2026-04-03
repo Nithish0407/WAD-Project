@@ -98,6 +98,22 @@ app.get("/ready", (req, res) => {
   });
 });
 
+// Simple public endpoints used by legacy static pages
+app.get("/lab-status", (req, res) => {
+  // Placeholder status; replace with real logic as needed
+  res.json({ requiredStudents: 0, status: "available" });
+});
+
+app.get("/lab-equipment/:labName", (req, res, next) => {
+  const labName = req.params.labName;
+  const q =
+    "SELECT equipment_name, total_quantity AS total, available_quantity AS available FROM app_records WHERE type = 'equipment' AND lab_name = ? ORDER BY equipment_name";
+  db.query(q, [labName], (err, rows) => {
+    if (err) return next(err);
+    return res.json(rows || []);
+  });
+});
+
 app.use("/api", equipmentRoutes);
 app.use("/api", authRoutes);
 app.use("/api", reservationRoutes);
