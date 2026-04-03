@@ -80,7 +80,8 @@ app.use((req, res, next) => {
   }
 });
 
-app.use(express.static(path.join(__dirname, "public")));
+// Serve the frontend files that live in the sibling Frontend/public directory
+app.use(express.static(path.join(__dirname, "..", "Frontend", "public")));
 // Serve Bootstrap assets locally to avoid external CDN dependency
 app.use(
   "/bootstrap",
