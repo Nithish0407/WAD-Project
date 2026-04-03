@@ -81,7 +81,21 @@ app.use((req, res, next) => {
 });
 
 // Serve the frontend files that live in the sibling Frontend/public directory
-app.use(express.static(path.join(__dirname, "..", "Frontend", "public")));
+const publicDir = path.join(__dirname, "..", "Frontend", "public");
+app.use(express.static(publicDir));
+
+// Explicit routes so Render/Vercel don't 404 on common entry pages
+app.get(["/login", "/login.html"], (req, res) => res.sendFile(path.join(publicDir, "login.html")));
+app.get(["/signup", "/signup.html"], (req, res) => res.sendFile(path.join(publicDir, "signup.html")));
+app.get(["/index", "/index.html"], (req, res) => res.sendFile(path.join(publicDir, "index.html")));
+
+// Catch-all for frontend routes (avoid 404 on refresh/bookmarks)
+app.get("*", (req, res, next) => {
+  const p = req.path.toLowerCase();
+  if (p.startsWith("/api") || p.startsWith("/health") || p.startsWith("/ready") || p.startsWith("/lab-")) return next();
+  return res.sendFile(path.join(publicDir, "index.html"));
+});
+
 // Serve Bootstrap assets locally to avoid external CDN dependency
 app.use(
   "/bootstrap",
