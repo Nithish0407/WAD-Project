@@ -15,7 +15,7 @@
   <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script>
     function getStatus() {
-      fetch("http://localhost:5000/lab-status")
+      fetch("https://wad-project-l6pk.onrender.com/lab-status")
         .then(res => res.json())
         .then(data => {
           document.getElementById("output").innerText =

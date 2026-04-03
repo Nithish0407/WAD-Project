@@ -10,17 +10,18 @@
   const storedBase = normalize(localStorage.getItem("api_base"));
 
   const defaultBackendPort = "5000";
+  const renderBase = "https://wad-project-l6pk.onrender.com";
   const hostname = window.location.hostname;
   const isLocalhost = ["localhost", "127.0.0.1", ""].includes(hostname);
   const sameOrigin = normalize(window.location.origin);
-  const defaultBase = normalize(`http://localhost:${defaultBackendPort}`);
+  const defaultLocalBase = normalize(`http://localhost:${defaultBackendPort}`);
 
   const resolved =
     metaBase ||
     storedBase ||
-    (isLocalhost ? defaultBase : sameOrigin) ||
+    (isLocalhost ? defaultLocalBase : renderBase) ||
     sameOrigin ||
-    defaultBase;
+    defaultLocalBase;
 
   window.API_BASE = resolved;
 })();
