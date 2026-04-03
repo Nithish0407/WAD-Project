@@ -25,6 +25,9 @@ if (missing.length > 0) {
 
 const app = express();
 
+// Behind a proxy (Render/NGINX), trust the first hop so req.ip and rate limiting work correctly.
+app.set("trust proxy", 1);
+
 // Disable Helmet's default CSP to allow inline scripts used by the frontend pages.
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(
