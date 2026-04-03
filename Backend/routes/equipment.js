@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("../db");
-const { authenticate, ensureFacultyCanManageLab } = require("../../middleware/auth");
-const { validateEquipmentPayload } = require("../../middleware/validate");
+const { authenticate, ensureFacultyCanManageLab } = require("../middleware/auth");
+const { validateEquipmentPayload } = require("../middleware/validate");
 const { created, fail, ok } = require("../utils/response");
 const { logAudit } = require("../utils/audit");
 const { syncEquipmentToLabSchema, removeEquipmentFromLabSchema } = require("../utils/labSchemaSync");

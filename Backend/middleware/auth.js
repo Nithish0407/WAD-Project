@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const db = require("../Backend/db");
+const db = require("../db");
 const { fail } = require("../utils/response");
 
 function authenticate(req, res, next) {

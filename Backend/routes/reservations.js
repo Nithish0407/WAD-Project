@@ -1,7 +1,7 @@
 const express = require("express");
 const db = require("../db");
-const { authenticate } = require("../../middleware/auth");
-const { validateReservationPayload } = require("../../middleware/validate");
+const { authenticate } = require("../middleware/auth");
+const { validateReservationPayload } = require("../middleware/validate");
 const { created, fail, ok } = require("../utils/response");
 const { logAudit } = require("../utils/audit");
 

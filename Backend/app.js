@@ -14,7 +14,7 @@ const equipmentRoutes = require("./routes/equipment");
 const authRoutes = require("./routes/auth");
 const reservationRoutes = require("./routes/reservations");
 const adminRoutes = require("./routes/admin");
-const { notFound, errorHandler } = require("../middleware/error");
+const { notFound, errorHandler } = require("./middleware/error");
 
 const REQUIRED_ENV = ["DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME", "JWT_SECRET"];
 const missing = REQUIRED_ENV.filter(key => !process.env[key]);

@@ -2,8 +2,8 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
-const { authenticate } = require("../../middleware/auth");
-const { validateLogin, validateRegister } = require("../../middleware/validate");
+const { authenticate } = require("../middleware/auth");
+const { validateLogin, validateRegister } = require("../middleware/validate");
 const { created, fail, ok } = require("../utils/response");
 const { logAudit } = require("../utils/audit");
 
